@@ -12,8 +12,9 @@ use App\Http\Controllers\Admin\Customer\CustomerController;
 // use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Instructor\InstructorController;
 use App\Http\Controllers\Admin\Allergy\AllergyController;
-// use App\Http\Controllers\Admin\PackageController;
-// use App\Http\Controllers\Admin\PackageActivationsController;
+use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\PackageActivationsController;
+use App\Http\Controllers\Admin\PageController;
 // use App\Http\Controllers\Admin\DoctorFeedbackController;
 // use App\Http\Controllers\Admin\PatientFeedbackController;
 // use App\Http\Controllers\Admin\SymptomsController;
@@ -45,23 +46,31 @@ use App\Http\Controllers\Admin\AdminAccount\AdminAccountController;
 */
 Route::middleware('auth:admin')->group( function(){
 	Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
-	//program 
-	Route::get('category',[CategoryController::class,'index'])->name('category.index');
-	Route::get('category/create',[CategoryController::class,'create'])->name('category.create');
-	Route::post('category/store',[CategoryController::class,'store'])->name('category.store');
-	Route::get('category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
-	Route::post('category/update/{id}',[CategoryController::class,'update'])->name('category.update');
-	Route::delete('category/destroy/{id}',[CategoryController::class,'destroy'])->name('admin.category.destroy');
+	//program
+    Route::group(['prefix'=>'category'],function(){
+        Route::get('',[CategoryController::class,'index'])->name('category.index');
+        Route::get('/create',[CategoryController::class,'create'])->name('category.create');
+        Route::post('/store',[CategoryController::class,'store'])->name('category.store');
+        Route::get('/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+        Route::post('/update/{id}',[CategoryController::class,'update'])->name('category.update');
+        Route::delete('/destroy/{id}',[CategoryController::class,'destroy'])->name('admin.category.destroy');
+    });
+
 
 	// 	Route::resource('/doctor',DoctorController::class)->names('admin.doctor');
 
 	//Instructor
 	Route::resource('/instructor',InstructorController::class)->names('admin.instructor');
-	
+
 	//program
 	Route::resource('/program',ProgramController::class)->names('admin.program');
   //customer
   Route::get('customer',[CustomerController::class,'index'])->name('admin.customer.index');
+  Route::get('customer/create',[CustomerController::class,'create'])->name('admin.customer.create');
+//   Route::post('customer/store',[CustomerController::class,'store'])->name('admin.customer.store');
+  Route::get('customer/edit/{id}',[CustomerController::class,'edit'])->name('admin.customer.edit');
+  Route::post('customer/update/{id}',[CustomerController::class,'update'])->name('admin.customer.update');
+  Route::delete('customer/destroy/{id}',[CustomerController::class,'destroy'])->name('admin.customer.destroy');
 
 	//Allergy
 	// Route::resource('/allergy',AllergyController::class)->names('admin.allergy');
@@ -72,7 +81,7 @@ Route::middleware('auth:admin')->group( function(){
 	Route::post('allergy/update/{id}',[AllergyController::class,'update'])->name('admin.allergy.update');
 	Route::delete('allergy/destroy/{id}',[AllergyController::class,'destroy'])->name('admin.allergy.destroy');
 
-	
+
 	// subCatergory
 	//  Route::resource('/subcategory',SubCategoryController::class)->names('admin.subcategory');
 	Route::post('subcategory/store',[SubCategoryController::class])->name('subcategory.store');
@@ -141,8 +150,8 @@ Route::middleware('auth:admin')->group( function(){
 	//Package
 	Route::resource('/package',PackageController::class)->names('admin.package');
 
-    // //Package Activation Code
-	// Route::resource('/packages',PackageActivationsController::class)->names('admin.package-activation');
+    //Package Activation Code
+	Route::resource('/packages',PackageActivationsController::class)->names('admin.package-activation');
 
 	// //Route::resource('/destroy',PackageController::class)->names('admin.package.destroy');
 	// //Symptoms
@@ -178,8 +187,8 @@ Route::middleware('auth:admin')->group( function(){
 	Route::resource('/settings',GeneralSettingController::class)->names('admin.general_setting');
 	// //Media Controller
 	// Route::post('/file-upload', [MediaController::class, 'store'])->name('media');
-	// // Pages
-	// //Route::resource('/page',PageController::class)->names('admin.page');
+	// Pages
+	Route::resource('/page',PageController::class)->names('admin.page');
 
 	// //update
 	// Route::get('/prescription/pdf/{id}',[\App\Http\Controllers\Admin\PrescriptionController::class,'download_pdf'])->name('admin.prescription.pdf');

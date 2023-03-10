@@ -17,7 +17,7 @@ Admin - Package
                 <div class="doc-badge me-3">Packages <span class="ms-1">{{$count}}</span></div>
                {{--   <a href="{{route('admin.package.create')}}" data-bs-toggle="modal" data-bs-target="#addModal"
                     class="btn btn-primary btn-add"><i class="feather-plus-square me-1"></i> Add New</a> --}}
-                <a href="{{route('admin.package.create')}}" class="btn btn-primary btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
+                <a href="{{route('admin.package.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
             </div>
         </div>
     </div>
@@ -109,7 +109,15 @@ Admin - Package
                     },
                     "targets":0,
                 },
-	            {render: function (data, type, row, meta) {
+	            // {render: function (data, type, row, meta) {
+                //     return '<h2 class="table-avatar">'
+                //             +'<img class="avatar avatar-img" src="'+((row.image)?row.image:'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')+'" alt=""></a>'
+                //             +'<span class="user-name">'+data+'</span>'
+                //             '</h2>';
+                //     },
+                //     "targets":1,
+                // },
+                {render: function (data, type, row, meta) {
                     return '<h2 class="table-avatar">'
                             +'<img class="avatar avatar-img" src="'+((row.image)?row.image:'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')+'" alt=""></a>'
                             +'<span class="user-name">'+data+'</span>'

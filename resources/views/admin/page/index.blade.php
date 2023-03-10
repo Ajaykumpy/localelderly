@@ -9,7 +9,7 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h5 class="card-title float-start">Pages</h5>
-                            <a href="{{route('admin.page.create')}}" class="btn btn-primary btn-sm float-end"><i class="fa fa-plus"></i> Add New</a>
+                            <a href="{{route('admin.page.create')}}" class="btn btn-success btn-sm float-end"><i class="fa fa-plus"></i> Add New</a>
                         </div>
                         <div class="col-auto custom-list d-flex">
                             <div class="form-custom me-2">

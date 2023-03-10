@@ -17,48 +17,59 @@ Admin - Category Create
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Add Category</h4>
+                    <h4 class="card-title">Add Customer</h4>
                 </div>
                 <div class="card-body">
-                    <form class="form-valide" action="{{route('category.store')}}" method="Post" enctype="multipart/form-data">
+                    <form class="form-valide" action="{{route('admin.customer.store')}}" method="Post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row row">
+                            <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
+                                <label for="name">Image <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="file" name="image" class="form-control" required>
+                                </div>
+                        </div>
                                         <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
-                                                <label>Category Name<span class="text-danger">*</span></label>
+                                                <label>Member Name<span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="category_name" name="category_name" required>
-                                            </div> 
+                                                <input type="text" class="form-control" id="member_name" name="member_name" required>
+                                            </div>
                                         </div>
                                         <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
-                                                <label for="name">Image <span class="text-danger">*</span></label>
-                                                <div class="input-group">
-                                                    <input type="file" name="image" class="form-control" required>
-                                                </div>
+                                            <label>Joining Date<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="date" class="form-control" id="joining_date" name="joining_date" required>
                                         </div>
-                                            <div class="col-md-6 col-xl-6 col-xxl-6 mb-3">
-                                                 <label>Status <span class="text-danger">*</span></label>
-                                            <div class="input-group">
-                                             <select class="form-control" name="status" required>
-                                                <option value="1" >Enable</option>
-                                                <option value="0" >Disable</option>
-                                            </select>
-                                           </div>
-                                           </div>
-                                          
-                                       
-                                          
+                                    </div>
+                                    <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
+                                        <label>Expiry Date<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="expiry_date" name="expiry_date" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xl-6 col-xxl-6 mb-3">
+                                    <label>Member Type <span class="text-danger">*</span></label>
+                               <div class="input-group">
+                                <select class="form-control" name="member_type" required>
+                                   <option value="0" >Diet</option>
+                                   <option value="1" >Yoga</option>
+                                   <option value="2" >Diet + Yoga</option>
+                               </select>
+                              </div>
+                              </div>
+
+
+
+
                                 <div class="col-md-12 mb-2">
                                 </div>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>Description<span class="text-danger">*</span></label>
-                                <textarea class="form-control" name="description" placeholder="Enter Description"></textarea>
-                            </div>
+
 
                         </div>
                         <div class="text-end">
-                            <a href="{{route('admin.package.index')}}" class="btn btn-danger">Cancel</a>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <a href="{{route('admin.package.index')}}" class="btn btn-danger my-2 ">Cancel</a>
+                            <button type="submit" class="btn btn-success mx-2">Submit</button>
                         </div>
                     </form>
                 </div>

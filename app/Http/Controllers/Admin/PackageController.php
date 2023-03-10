@@ -90,9 +90,14 @@ class PackageController extends Controller
         $package->invoice_period=$request->invoice_period;
         $package->invoice_interval=$request->invoice_interval??'day';
         if($request->hasFile('image')){
-        $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/package/image/','upload_url'=>asset('uploads/package/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|webp)$/i',]);
+        $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/package/image/','upload_url'=>asset('public/uploads/package/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|webp)$/i',]);
         $package->image=$upload->get_response()['image'][0]->url;
         }
+        // if($request->hasFile('image')){
+        //     $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/banner/image/','upload_url'=>asset('public/uploads/banner/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+        //     $image=$upload->get_response()['image'][0]->url;
+        //     $banner->image=$image;
+        // }
         $package->price=$request->price;
         $package->currency=$request->currency??'inr';
         $package->status=$request->status??0;
@@ -134,9 +139,11 @@ class PackageController extends Controller
         $package->invoice_period=$request->invoice_period;
         $package->invoice_interval=$request->invoice_interval??'day';
         if($request->hasFile('image')){
-            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/package/image/','upload_url'=>asset('uploads/package/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|webp)$/i',]);
+            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/package/image/','upload_url'=>asset('public/uploads/package/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|webp)$/i',]);
             $package->image=$upload->get_response()['image'][0]->url;
         }
+
+
         $package->price=str_replace(',','',$request->price)??0;
         $package->currency=$request->currency??'inr';
         $package->status=$request->status??0;
