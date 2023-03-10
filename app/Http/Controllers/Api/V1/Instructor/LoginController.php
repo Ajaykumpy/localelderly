@@ -22,7 +22,7 @@ class LoginController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return array
     */
-    public function check_doctor(Request $request)
+    public function check_instrcutor(Request $request)
     {
         $doctor = Instructor::where('mobile',$request->mobile)->first();
         if(!$doctor){
@@ -39,61 +39,7 @@ class LoginController extends Controller
   public function authenticate(Request $request)
   {
 
-
-
-    //   $validator = Validator::make($request->all(), [
-    //       // 'pin' => 'required',
-    //       'email_phone' => 'required'
-    //   ]);
-
-
-
-    //   //Send failed response if request is not valid
-    //   if ($validator->fails()) {
-    //       return response()->json($validator->messages(), 422);
-    //   }
-
-    // if(is_numeric($request->email_phone)){
-    //     $Doctor = Instructor::where('mobile',$request->email_phone)->where('deleted',0)->where('ban',0)->first();
-    //     if(!$Doctor){
-    //         return response()->json([
-    //             'error'=>true,
-    //             'message'=>'No Doctor found!'
-    //         ],422);
-    //     }
-    // }else{
-    //     $Doctor = Instructor::where('email',$request->email_phone)->where('deleted',0)->where('ban',0)->first();
-    //     if(!$Doctor){
-    //         return response()->json([
-    //             'error'=>true,
-    //             'message'=>'No Doctor found!'
-    //         ],422);
-    //     }
-    // }
-
-    //     if (!Hash::check($request->password, $Doctor->password)){
-    //         return response()->json(['message'=>"Credentials are wrong"],422);
-    //     }
-    //     $auth = \Auth::login($Doctor);
-    //     $Doctor->token =  $Doctor->createToken('api')->plainTextToken;
-    //     $device = InstructorDevice::where('instructor_id',auth()->id())->updateOrCreate([
-    //         'instructor_id' =>auth()->id(),
-    //     ],[
-    //         'instructor_id' =>auth()->id(),
-    //         'device_id' => $request->device_id,
-    //         'device_type' => $request->device_type??'',
-    //     ]);
-
-    //   return response()->json([
-    //       'success' => true,
-    //       'user'  => $Doctor,
-    //   ]);
-
-
-
-
-
-      $validator = Validator::make($request->all(), [
+    $validator = Validator::make($request->all(), [
         'email_phone'=>'required',
         "password" =>'required|min:6',
     ]);
@@ -117,7 +63,7 @@ class LoginController extends Controller
                 'message'=>'No user found!'
             ],422);
         }
-    } 
+    }
     if (!Hash::check($request->password, $instructor->password)){
         return response()->json(['message'=>"Credentials are wrong"],422);
     }
@@ -135,11 +81,11 @@ class LoginController extends Controller
             'success' => true,
             'message'=>'Login successfully ',
             'instructor'  => $instructor,
-            
+
         ],200);
- 
-    // } 
-   
+
+    // }
+
     // catch (\Throwable $e) {
     //   \Sentry\captureException($exception);
     //         return response()->json([
@@ -158,28 +104,59 @@ class LoginController extends Controller
     */
 
   public function forgotPassword(Request $request){
-        $validator = Validator::make($request->all(),[
-            'mobile' => 'required',
-            'password' => 'required|min:6',
-            'confirm_password' => 'required|same:password',
-        ]);
-        if($validator->fails()) {
-            return response()->json($validator->messages(), 422);
-        }
+    $validator = Validator::make($request->all(),[
+        'mobile' => 'required',
+        'password' => 'required|min:6',
+        'confirm_password' => 'required|same:password',
+    ]);
+    if($validator->fails()) {
+        return response()->json($validator->messages(), 422);
+    }
 
-        $user = Instructor::where('mobile', $request->mobile)->first();
-        // $user->password = ;
-            if($user){
-
-
-        $user->password=Hash::make($request->password);
-        $user->save();
+    $user = Instructor::where('mobile', $request->mobile)->first();
+    // $user->password = ;
         if($user){
-            return response()->json(['message'=>"password changed successfully"]);
-        }
 
-        }else{
-            return response()->json(['message'=>"Mobile is not registered"],404);
+
+    $user->password=Hash::make($request->password);
+    $user->save();
+    if($user){
+        return response()->json(['message'=>"password changed successfully"]);
+    }
+
+    }else{
+        return response()->json(['message'=>"Mobile is not registered"],404);
+    }
+
+    }
+
+    public function logout(){
+        $accessToken = request()->bearerToken();
+        $token = PersonalAccessToken::findToken($accessToken);
+        if(!$token){
+            return response()->json([
+                'error'=>true,
+                'message'=>'Unknown Error!'
+            ],422);
         }
+        $user=$token->tokenable_type::find($token->tokenable_id);
+        $revoke=$user->tokens()->delete();
+        if(!$revoke){
+            return response()->json([
+                'error'=>true,
+                'message'=>'Unknown Error!'
+            ],422);
+        }
+        activity()->causedBy($user)->performedOn($user)->event('logout')
+                  ->useLog('logout')
+                  ->log('Logout, User logout from system');
+        activity()->causedBy($user)->performedOn($user)->event('logout')->useLog('location')
+                  ->withProperties(['latitude'=>request()->latitude,'longitude'=>request()->longitude,'device_id' => request()->device_id])
+                  ->log('Logout, User logout from system');
+
+        return response()->json([
+            'success'=>true,
+            'message'=>'Logout successfully'
+        ]);
     }
 }

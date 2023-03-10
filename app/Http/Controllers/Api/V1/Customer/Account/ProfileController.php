@@ -96,7 +96,7 @@ class ProfileController extends Controller
         }
           return response()->json(['success'=>true,'message'=>'profile updated successfully','data'=>$user],200);
     }
-  
+
 
       /**
     * User Profile Store
@@ -119,7 +119,7 @@ class ProfileController extends Controller
         $user->allergies=$request->allergies??"NA";
         $user->diet_preferences=$request->diet_preferences??"NA";
         $user->goal=$request->goal??"NA";
-     
+
         $user->save();
         if (!$user) {
             return response()->json(['error'=>true,'message'=>'No Contact Found'],422);
@@ -151,9 +151,9 @@ class ProfileController extends Controller
 
     }
 
-     /**
+    /**
     * User  profile Delete
-    *.
+    *
     * @param  \Illuminate\Http\Request  $request
     * @return array
     */
