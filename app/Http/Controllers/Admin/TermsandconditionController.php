@@ -46,20 +46,6 @@ class TermsandconditionController extends Controller
       return redirect(route('admin.terms-and-conditions.index').'#tnc_section')->with('success', 'Saved Successfully');
     }
 
-    public function get_termandcondition(Request $request)
-    {
-      $termsandcondition =\Corcel\Model\Post::where('post_title','Terms & Conditions')->first();
-      if(!$termsandcondition){
-        return response()->json(['error' => 'Something went wrong'],422);
-      }
-      return response()->json([
-        'success'=>true,
-        'data'=>[
-          'title'=>$termsandcondition->title,
-          'content'=>$termsandcondition->content
-        ]
-      ]);
-    }
 
 
 
