@@ -37,8 +37,8 @@ class PrivacyPolicyController extends Controller
         $privacypolicy = new \Corcel\Model\Post();
       }
       $privacypolicy->post_type='page';
-      $privacypolicy->post_title='Privacy Policy';      
-      $privacypolicy->post_content=$request->privacy_policy;      
+      $privacypolicy->post_title='Privacy Policy';
+      $privacypolicy->post_content=$request->privacy_policy;
       $privacypolicy->post_name='privacy_policy';
       $privacypolicy->save();
       if(!$privacypolicy){
@@ -47,20 +47,7 @@ class PrivacyPolicyController extends Controller
       return redirect(route('admin.privacy-policy.index').'#tnc_section')->with('success', 'Saved Successfully');
     }
 
-    public function get_privacypolicy(Request $request)
-    {      
-      $privacypolicy =\Corcel\Model\Post::where('post_title','Privacy Policy')->first(); 
-      if(!$privacypolicy){
-        return response()->json(['error' => 'Something went wrong'],422);
-      }
-      return response()->json([
-        'success'=>true,
-        'data'=>[
-          'title'=>$privacypolicy->title,
-          'post_content'=>$privacypolicy->post_content
-        ]
-      ]);
-    }
+
 
   /**
      * Store a newly created resource in storage.

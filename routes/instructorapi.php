@@ -3,19 +3,20 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Instructor\LoginController;
-use App\Http\Controllers\Api\V1\MeetingRequestController;
-use App\Http\Controllers\Api\V1\Instructor\PrivacyPolicyController;
-use App\Http\Controllers\Admin\SpecialistController;
-use App\Http\Controllers\Api\V1\Instructor\DoctorStatusController;
-use App\Http\Controllers\Api\V1\Instructor\DoctorFeedbackController;
-use App\Http\Controllers\Api\V1\Instructor\DoctorCallLogController;
-use App\Http\Controllers\Api\V1\Instructor\AppVersionController;
-use App\Http\Controllers\Api\V1\Instructor\OtpController;
-use App\Http\Controllers\Api\V1\Instructor\TermsandconditionController;
-use App\Http\Controllers\Api\V1\Account\BankController;
-use App\Http\Controllers\Api\V1\Instructor\PrescriptionController;
-use App\Http\Middleware\DoctorCheckStatus;
-use App\Http\Controllers\Api\V1\Patient\EmergencyController;
+use App\Http\Controllers\Api\V1\Instructor\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\Instructor\PageController;
+
+// use App\Http\Controllers\Api\V1\MeetingRequestController;
+// use App\Http\Controllers\Admin\SpecialistController;
+// use App\Http\Controllers\Api\V1\Instructor\DoctorStatusController;
+// use App\Http\Controllers\Api\V1\Instructor\DoctorFeedbackController;
+// use App\Http\Controllers\Api\V1\Instructor\DoctorCallLogController;
+// use App\Http\Controllers\Api\V1\Instructor\AppVersionController;
+// use App\Http\Controllers\Api\V1\Instructor\OtpController;
+// use App\Http\Controllers\Api\V1\Account\BankController;
+// use App\Http\Controllers\Api\V1\Instructor\PrescriptionController;
+// use App\Http\Middleware\DoctorCheckStatus;
+// use App\Http\Controllers\Api\V1\Patient\EmergencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,22 +29,18 @@ use App\Http\Controllers\Api\V1\Patient\EmergencyController;
 |
 */
 
-//Patient and doctor login
+//Instructor Login
 Route::post('register',[App\Http\Controllers\Api\V1\Instructor\Auth\RegisterController::class,'register']);
 Route::post('check/instructor',[LoginController::class,'check_instrcutor']);
 Route::post('login',[LoginController::class,'authenticate']);
+//Page Controller
+Route::get('term-and-condition',[PageController::class,'get_insctructmandconditions']);
+Route::get('privacy-policy',[PageController::class,'get_privacypolicy']);
+
 
 // Route::any('appversion',[App\Http\Controllers\Api\V1\Instructor\AppVersionController::class,'show']);//logout
 //Route::post('mobile-verification',[App\Http\Controllers\Api\V1\Instructor\Auth\RegisterController::class,'mobile_verification']);
 
-// // App Version
-// Route::get('doctor_condition',[TermsandconditionController::class,'get_doctermandconditions']);
-
-// //Terms and Condition
-// // Route::get('terms-and-condition',[TermsandconditionController::class,'get_termandcondition']);
-// Route::get('doctor_condition',[TermsandconditionController::class,'get_doctermandconditions']);
-// //Privacy Policy
-// Route::get('privacy-policy',[PrivacyPolicyController::class,'get_privacypolicy']);
 // // Otp generate and Verification
 // Route::post('otp/generate',[OtpController::class,'generate_otp']);
 // Route::any('otp/verification',[OtpController::class,'otpVerification']);

@@ -11,8 +11,7 @@ use App\Http\Controllers\Api\V1\Category\SubCategoryApiController;
 use App\Http\Controllers\Api\V1\Customer\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Banner\BannerController;
 use App\Http\Middleware\CheckStatus;
-use App\Http\Controllers\Admin\TermsandconditionController;
-use App\Http\Controllers\Admin\PrivacyPolicyController;
+use App\Http\Controllers\Api\V1\Customer\PageController;
 
 
 // use App\Http\Controllers\Api\V1\Videocall\VideoCallController;
@@ -75,10 +74,9 @@ Route::get('allergy/list',[AllergyController::class,'allergy_List']);
 Route::get('category/list',[CategoryApiController::class,'category_List']);
 //SubCategory
 Route::get('subcategory/list',[SubCategoryApiController::class,'subCategory_list']);
-//Terms and Condition
-Route::get('terms-and-condition',[TermsandconditionController::class,'get_termandcondition']);
-//Privacy Policy
-Route::get('privacy-policy',[PrivacyPolicyController::class,'get_privacypolicy']);
+//Page Controller
+Route::get('terms-and-condition',[PageController::class,'get_termandcondition']);
+Route::get('privacy-policy',[PageController::class,'get_privacypolicy']);
 
 
 //
