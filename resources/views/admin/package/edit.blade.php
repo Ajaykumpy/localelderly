@@ -51,7 +51,7 @@ Admin - Package
                                     <label class="form-check-label" for="status">Enable</label>
                                 </div>
                             </div>
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-6 form-group">
                                 <label for="name">Image</label>
                                 <div class="change-photo-btn h-50">
                                     <div>
@@ -64,12 +64,26 @@ Admin - Package
 									alt="preview image" style="max-height: 64px;width:auto;margin-left: 64px;">
 									 @endif
                                 </div>
+
                                 <div class="col-md-12 mb-2">
                                 </div>
                                 @if($packages->image)
                                 <p class="file-name text-success">Successfully {{$packages->image}} uploaded <a href="#" class="text-danger"><i class="feather-x"></i></a></p>
                                 @endif
                             </div>
+                            <div class="col-md-6 col-xl-6 col-xxl-6 mb-3">
+                                <label>Category <span class="text-danger">*</span></label>
+                           <div class="input-group">
+                            <select class="form-control" name="category_id" required >
+                                <option value="1" {{$packages->category_id==1 ? "selected" : ''}} >Yoga</option>
+                                <option value="2" {{$packages->category_id==2 ? "selected" : ''}} >Diet</option>
+                                <option value="3" {{$packages->category_id==3 ? "selected" : ''}} >Yoga + Diet</option>
+
+
+                           </select>
+                          </div>
+                          </div>
+
                             <div class="col-md-12 form-group">
                                 <label>Description<span class="text-danger">*</span></label>
                                 <textarea class="form-control" name="description" placeholder="Enter Description">{{$packages->description}}</textarea>

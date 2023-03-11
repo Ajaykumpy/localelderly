@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Package;
+use App\Models\Category;
 use App\Helpers\UploadHandler;
 use App\Models\PackageSubscription;
 
@@ -68,7 +69,8 @@ class PackageController extends Controller
      */
     public function create()
     {
-      return view('admin.package.create');
+      $category=Category::all();
+      return view('admin.package.create',compact('category'));
     }
 
     /**
@@ -84,8 +86,10 @@ class PackageController extends Controller
             'description'=>'required',
             'price'=>'required'
         ]);
+
         $package=new Package();
         $package->name=$request->name;
+        $package->category_id=$request->category_id;
         $package->description=$request->description;
         $package->invoice_period=$request->invoice_period;
         $package->invoice_interval=$request->invoice_interval??'day';
@@ -135,6 +139,7 @@ class PackageController extends Controller
     {
         $package=Package::find($id);
         $package->name=$request->name;
+        $package->category_id=$request->category_id;
         $package->description=$request->description;
         $package->invoice_period=$request->invoice_period;
         $package->invoice_interval=$request->invoice_interval??'day';

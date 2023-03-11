@@ -51,6 +51,17 @@ Admin - Package
                                     <label class="form-check-label" for="status">Enable</label>
                                 </div>
                             </div>
+                            <div class="col-md-6 col-xl-6 col-xxl-6 mb-3">
+                                <label>Category <span class="text-danger">*</span></label>
+                           <div class="input-group">
+                            <select class="form-control" name="category_id" required >
+                                @foreach ($category as $data)
+                               <option value="{{$data->id}}" >{{$data->category_name}}</option>
+                              @endforeach
+                           </select>
+                          </div>
+                          </div>
+
                             <div class="col-md-3 form-group">
                                 <label for="name">Image</label>
                                 <div class="change-photo-btn h-50">
@@ -105,7 +116,7 @@ Admin - Package
 
 });
     </script>
-    
+
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 @endpush
