@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\V1\Customer\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Banner\BannerController;
 use App\Http\Middleware\CheckStatus;
 use App\Http\Controllers\Api\V1\Customer\PageController;
+use App\Http\Controllers\Api\V1\PackageController;
+
 
 
 // use App\Http\Controllers\Api\V1\Videocall\VideoCallController;
@@ -23,7 +25,6 @@ use App\Http\Controllers\Api\V1\Customer\PageController;
 // use App\Http\Controllers\Api\V1\SubscriptionController;
 // use App\Http\Controllers\Admin\SymptomsController;
 // use App\Http\Controllers\Api\V1\Customer\Account\UserActivityController;
-// use App\Http\Controllers\Api\V1\PackageController;
 // use App\Http\Controllers\Api\V1\Customer\EmergencyController;
 // use App\Http\Controllers\Admin\HealthRecordController;
 // use App\Http\Controllers\Api\V1\MeetingRequestController;
@@ -110,15 +111,15 @@ Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
     Route::post('account/delete',[ProfileController::class,'account_delete']);
     Route::get('profile/info',[ProfileController::class,'profile_info']);
 
-//Package
-//     Route::get('package',[PackageController::class,'index']);
-// 	Route::get('package/subscriptions',[PackageController::class,'package_subscription']);
-// 	Route::post('package',[PackageController::class,'store']);
-//     Route::post('package/update',[PackageController::class,'update']);
-// 	Route::post('package/renew',[PackageController::class,'renew']);
-//     Route::post('package/renew/update',[PackageController::class,'renew_update']);
-// 	Route::get('package/status',[\App\Http\Controllers\Api\V1\Customer\Account\PackageController::class,'index']);
-//     Route::post('package/payment/fail',[PackageController::class,'payment_failure']);
+// Package
+    Route::get('package',[PackageController::class,'index']);
+	Route::get('package/subscriptions',[PackageController::class,'package_subscription']);
+	Route::post('package',[PackageController::class,'store']);
+    Route::post('package/update',[PackageController::class,'update']);
+	Route::post('package/renew',[PackageController::class,'renew']);
+    Route::post('package/renew/update',[PackageController::class,'renew_update']);
+	Route::get('package/status',[\App\Http\Controllers\Api\V1\Customer\Account\PackageController::class,'index']);
+    Route::post('package/payment/fail',[PackageController::class,'payment_failure']);
 
 
 //     //check activation code. entered by employee of company

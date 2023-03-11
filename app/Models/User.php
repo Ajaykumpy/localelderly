@@ -61,6 +61,14 @@ class User extends Authenticatable
         //return $this->hasOne(DoctorProfile::class,'doctor_id','id');
 		return $this->belongsTo(User::class,'id','mobile');
     }
+
+    public function allergies(){
+        return $this->hasOneThrough(allergy::class,UserAllergy::class,'user_id','id','id','allergy_id');
+    }
+
+    public function allergy(){
+        return $this->belongsToMany(allergy::class,'user_allergies','user_id','allergy_id','id');
+    }
     // public function profiledetails()
     // {
     //     return $this->belongsTo(PatientProfile::class,'user_id','id');
