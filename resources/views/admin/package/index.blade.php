@@ -45,7 +45,7 @@ Admin - Package
 
                                 <tr>
                                     <th>Sr.No</th>
-                                    <th>Name</th>
+                                    <th>Membership Name</th>
                                     <th>Duration</th>
                                     <th>Price</th>
                                     <th>Status</th>

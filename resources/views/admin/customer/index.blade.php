@@ -17,13 +17,13 @@ Admin - Customer
     <div class="content container-fluid">
         <div class="page-header mb-0">
             <div class="row align-items-center">
-                <div class="col">
+                {{--<div class="col">
                     <ul class="list-links">
                         <li class="active"><a class="py-1" href="#">Subscribed</a></li>
                         <li><a class="py-1" href="#">Unsubscribed</a></li>
                         <li><a class="py-1" href="#">Expired</a></li>
                     </ul>
-                </div>
+                </div>--}}
                 <div class="col d-flex justify-content-end">
                     <div class="doc-badge me-3">Patient <span class="ms-1">{{$count}}</span></div>
 

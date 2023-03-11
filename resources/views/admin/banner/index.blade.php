@@ -33,21 +33,21 @@ Admin - Banner
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="datatables table table-borderless hover-table" id="table">
-                            
+
                             <thead class="thead-light">
-                               
+
                                 <tr>
                                     <th>Sr.no</th>
                                     <th>Image</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
-                               
+
                             </thead>
                             <tbody>
           {{--   @foreach ($banner as $data)
                                 <tr>
-                               
+
                                 <td>{{$data->id}}</td>
                                 <td> <img src="{{asset('public/images/banner/image/'.$data->image)}}" alt="image" width="200px" height="150px"></td>
                                 <td>{{$data->status}}</td>
@@ -60,7 +60,7 @@ Admin - Banner
                         </a>
                     </div></td>
                                 </tr>
-                       
+
                                 @endforeach
 --}}                            </tbody>
                         </table>
@@ -84,7 +84,7 @@ Admin - Banner
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
  <script>
-           $(document).ready(function() {
+    $(document).ready(function() {
         $('#table').DataTable({
             "language": {
                 search: ' ',
@@ -120,12 +120,12 @@ Admin - Banner
 	            {render: function (data, type, row, meta) {
 
                           return '<img class=" avatar-img" src="'+data+'" alt="Image" width="200px" height="100px">';
-                    
-        
+
+
                       },
                     "targets":1,
- 
-                   
+
+
                 },
                 {render: function (data, type, row, meta) {
                         return (data==1)?'<span class="badge badge-success">Enable</span>':'<span class="badge badge-danger">Disable</span>';

@@ -60,7 +60,15 @@ Route::middleware('auth:admin')->group( function(){
 	// 	Route::resource('/doctor',DoctorController::class)->names('admin.doctor');
 
 	//Instructor
-	Route::resource('/instructor',InstructorController::class)->names('admin.instructor');
+	// Route::resource('/instructor',InstructorController::class)->names('admin.instructor');
+
+    Route::get('instructor',[InstructorController::class,'index'])->name('admin.instructor.index');
+	Route::get('instructor/create',[InstructorController::class,'create'])->name('admin.instructor.create');
+	Route::post('instructor/store',[InstructorController::class,'store'])->name('admin.instructor.store');
+	Route::get('instructor/edit/{id}',[InstructorController::class,'edit'])->name('admin.instructor.edit');
+	Route::post('instructor/update/{id}',[InstructorController::class,'update'])->name('admin.instructor.update');
+	Route::delete ('instructor/destroy/{id}',[InstructorController::class,'destroy'])->name('admin.instructor.destroy');
+
 
 	//program
 	Route::resource('/program',ProgramController::class)->names('admin.program');

@@ -26,15 +26,15 @@ Admin - Category Edit
                         <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
                                                 <label>Program Name<span class="text-danger">*</span></label>
                                                 <div class="input-group">
-                                         
+
                                                 <input type="text" class="form-control" id="category_name" name="category_name" required value="{{$category->category_name}}">
-                                                
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
                                                 <label for="name">Image <span class="text-danger">*</span></label>
                                                 <div class="input-group">
-                                                    <input type="file" name="image" class="form-control" required>
+                                                    <input type="file" name="image" class="form-control" >
                                                 </div>
                                         </div>
                                             <div class="col-md-6 col-xl-6 col-xxl-6 mb-3">
@@ -46,9 +46,9 @@ Admin - Category Edit
                                             </select>
                                            </div>
                                            </div>
-                                          
-                                       
-                                          
+
+
+
                                 <div class="col-md-12 mb-2">
                                 </div>
                             </div>
