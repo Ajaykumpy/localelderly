@@ -1,16 +1,16 @@
 @extends('admin.layouts.default')
 @section('title')
-Admin - Instructor
+Admin - Dietitian
 @endsection
 @section('content')
 <div class="content container-fluid">
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col-md-12 d-flex justify-content-end">
-             <div class="doc-badge me-3">Instructor <span class="ms-1">{{$count}}</span></div>
+             <div class="doc-badge me-3">Dietitian  <span class="ms-1">{{$count}}</span></div>
                {{--   <a href="{{route('admin.package.create')}}" data-bs-toggle="modal" data-bs-target="#addModal"
                     class="btn btn-succes btn-add"><i class="feather-plus-square me-1"></i> Add New</a> --}}
-                <a href="{{route('admin.instructor.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
+                <a href="{{route('admin.dietitian.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@ Admin - Instructor
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="card-title">Instructor</h5>
+                            <h5 class="card-title">Dietitian </h5>
                         </div>
                         <div class="col-auto custom-list d-flex">
                             <div class="form-custom me-2">
@@ -39,8 +39,6 @@ Admin - Instructor
                                 <tr>
                                     <th>Sr.no</th>
                                     <th>Image</th>
-                                    <th>Name</th>
-                                    <th>Mobile</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -73,8 +71,6 @@ Admin - Instructor
         </div>
     </div>
 </div>
-
-
 @stop
 @push('styles')
 <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -87,9 +83,8 @@ Admin - Instructor
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
-<script>
-$(document).ready(function() {
+ <script>
+    $(document).ready(function() {
         $('#table').DataTable({
             "language": {
                 search: ' ',
@@ -113,10 +108,7 @@ $(document).ready(function() {
             "columns": [
                 { "data": 'id',"name":'id','orderable': false, 'searchable': false,'width':'5%'},
                 { "data": "image","name":"image"},
-                { "data": "name","name":"name"},
-                { "data": "mobile","name":"mobile"},
                 { "data": "status","name":"status"},
-
                 { "data": "action",orderable: false, searchable: false,visible:true},
             ],
             "columnDefs": [
@@ -127,7 +119,7 @@ $(document).ready(function() {
                 },
 	            {render: function (data, type, row, meta) {
 
-                          return '<img class="avatar avatar-img" src="'+((row.image)?row.image:'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')+'" alt="">';
+                          return '<img class=" avatar-img" src="'+data+'" alt="Image" width="200px" height="100px">';
 
 
                       },
@@ -138,7 +130,7 @@ $(document).ready(function() {
                 {render: function (data, type, row, meta) {
                         return (data==1)?'<span class="badge badge-success">Enable</span>':'<span class="badge badge-danger">Disable</span>';
                     },
-                    "targets":4,
+                    "targets":2,
                 }
                 // {render: function (data, type, row, meta) {
                 //         return meta.row+1;
@@ -159,7 +151,6 @@ $(document).ready(function() {
             },
         });
     });
-
     function pack_del(id){
         console.log(id);
         Swal.fire({
@@ -174,7 +165,7 @@ $(document).ready(function() {
           if (result.isConfirmed) {
             $.ajax({
                 type:'post',
-                url:'{!! route("admin.instructor.destroy",'+id+') !!}',
+                url:'{!! route("admin.banner.destroy",'+id+') !!}',
                 data:{_token:'{{csrf_token()}}',_method:'delete',id:id},
                 success:function(data){
                     Swal.fire('Deleted!','Your Data has been deleted.','success')
@@ -189,6 +180,6 @@ $(document).ready(function() {
 
           }
         })
-  };
+  }
 </script>
 @endpush

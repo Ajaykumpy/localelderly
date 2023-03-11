@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Category\SubCategoryController;
 use App\Http\Controllers\Admin\Banner\BannerController;
+use App\Http\Controllers\Admin\Dietitian\DietitianController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\Customer\CustomerController;
 // use App\Http\Controllers\Admin\SpecialistController;
@@ -110,6 +111,15 @@ Route::middleware('auth:admin')->group( function(){
 	Route::post('banner/update/{id}',[BannerController::class,'update'])->name('admin.banner.update');
 	Route::delete('banner/destroy/{id}',[BannerController::class,'destroy'])->name('admin.banner.destroy');
 
+
+
+	// Dietitian
+     Route::get('dietitian',[DietitianController::class,'index'])->name('admin.dietitian.index');
+     Route::get('/create',[DietitianController::class,'create'])->name('admin.dietitian.create');
+     Route::post('/store',[DietitianController::class,'store'])->name('admin.dietitian.store');
+     Route::get('/edit/{id}',[DietitianController::class,'edit'])->name('admin.dietitian.edit');
+     Route::post('/update/{id}',[DietitianController::class,'update'])->name('admin.dietitian.update');
+     Route::delete('/destroy/{id}',[DietitianController::class,'destroy'])->name('admin.dietitian.destroy');
 
 	//Admin Account Details
 

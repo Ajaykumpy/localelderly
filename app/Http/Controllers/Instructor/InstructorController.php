@@ -151,7 +151,6 @@ class InstructorController extends Controller
      */
     public function destroy($id)
     {
-
         $instructor=Instructor::where('id',$request->id)->delete();
         if($instructor){
          return response()->json(['success'=>true, 'message'=>'Deleted Successfully'],200);

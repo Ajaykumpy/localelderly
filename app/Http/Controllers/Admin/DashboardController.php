@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\Instructor;
+use App\Models\Dietitian;
+use App\Models\Package;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
@@ -15,9 +18,14 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()    
+    public function index()
     {
-      return view('admin.dashboard');
+
+     $customer=User::count();
+     $instructor=Instructor::count();
+     $dietitian=Dietitian::count();
+     $package=Package::count();
+      return view('admin.dashboard',compact('customer','instructor','dietitian','package'));
     }
 
     /**
@@ -30,7 +38,7 @@ class DashboardController extends Controller
     {
         //19.20993208239872, 72.90712565080182
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -40,7 +48,7 @@ class DashboardController extends Controller
      */
     public function edit($id)
     {
-       
+
     }
 
     /**
@@ -52,8 +60,8 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
-        
+
+
     }
 
     /**
@@ -67,6 +75,6 @@ class DashboardController extends Controller
         //
     }
 
-   
-     
+
+
 }
