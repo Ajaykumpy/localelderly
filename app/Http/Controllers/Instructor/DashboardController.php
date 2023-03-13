@@ -19,7 +19,7 @@ class DashboardController extends Controller
     {
         // $Status = DoctorStatus::where('date', '=', Carbon::now()->toDateString())
         //                 ->where('status','Active')
-        //                 ->where('doctor_id',auth()->id())->first(); 
+        //                 ->where('doctor_id',auth()->id())->first();
         // if(!$Status){
         //     $Status = 'offline';
         // }else{

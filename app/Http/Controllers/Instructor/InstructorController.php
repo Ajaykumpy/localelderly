@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\PatientCallRequest;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
+use App\Helpers\UploadHandler;
+use Hash;
 use Carbon\Carbon;
 
 class InstructorController extends Controller
@@ -17,19 +19,26 @@ class InstructorController extends Controller
      */
     public function index()
     {
-        // $Status = DoctorStatus::where('date', '=', Carbon::now()->toDateString())
-        //                 ->where('status','Active')
-        //                 ->where('doctor_id',auth()->id())->first(); 
-        // if(!$Status){
-        //     $Status = 'offline';
-        // }else{
-        //     $Status = 'Active';
-        // }
-        // $appoinments=PatientCallRequest::where('doctor_id',auth()->id())->count();
-        // return view('doctor.dashboard',compact('appoinments','Status'));
-        return view('admin.instructor.dashboard');
-    }
+    if(request()->ajax()){
 
+        $instructor=Instructor::all();
+
+        return datatables()->of($instructor)->addColumn('action',function($data){
+        return '<div class="actions">
+               <a class="text-black" href="'.route('admin.instructor.edit',$data->id).'">
+                   <i class="feather-edit-3 me-1"></i> Edit
+               </a>
+               <a class="text-danger delete-speciality pointer-link" onclick="pack_del('.$data->id.')" data-id="'.$data->id.'">
+              <i class="feather-trash-2 me-1"></i> Delete
+              </a>
+           </div>';
+        })->make(true);
+
+     }
+    $count= Instructor::count();
+    return view ('admin.instructor.dashboard',compact('count'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +46,7 @@ class InstructorController extends Controller
      */
     public function create()
     {
-        //
+       return view('admin.instructor.create');
     }
 
     /**
@@ -48,7 +57,35 @@ class InstructorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $instructor=new Instructor();
+        if($request->hasFile('image')){
+            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/instructor/image/','upload_url'=>asset('public/uploads/instructor/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+            $image=$upload->get_response()['image'][0]->url;
+            $instructor->image=$image;
+        }
+        $instructor->name=$request->name;
+        $instructor->middle_name=$request->middle_name;
+        $instructor->last_name=$request->last_name;
+        $instructor->dob=$request->dob;
+        $instructor->mobile=$request->mobile;
+        $instructor->email=$request->email;
+        $instructor->gender=$request->gender;
+        $instructor->password=Hash::make($request['password']);
+        $instructor->save();
+        if (!$instructor) {
+            return redirect()->back()->with('Something Went Wrong');
+        }
+
+         return redirect()->route('admin.instructor.create')->with('success', 'Saved Successfully');
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -70,7 +107,8 @@ class InstructorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $instructor = Instructor::find($id);
+        return view('admin.instructor.edit',compact('instructor'));
     }
 
     /**
@@ -82,7 +120,27 @@ class InstructorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $instructor = Instructor::find($id);
+        if($request->hasFile('image')){
+            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/instructor/image/','upload_url'=>asset('public/uploads/instructor/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+            $image=$upload->get_response()['image'][0]->url;
+            $instructor->image=$image;
+        }
+        $instructor->name=$request->name;
+        $instructor->middle_name=$request->middle_name;
+        $instructor->last_name=$request->last_name;
+        $instructor->dob=$request->dob;
+        $instructor->mobile=$request->mobile;
+        $instructor->email=$request->email;
+        $instructor->gender=$request->gender;
+        $instructor->save();
+
+            if(!$instructor){
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+            return redirect()->route('admin.instructor.index')->with('success', 'Updated Successfully');
+
     }
 
     /**
@@ -93,7 +151,11 @@ class InstructorController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $instructor=Instructor::where('id',$request->id)->delete();
+        if($instructor){
+         return response()->json(['success'=>true, 'message'=>'Deleted Successfully'],200);
+        }
+        return response()->json(['error'=>true, 'message'=>'Something went wrong'],500);
+     }
 
 }

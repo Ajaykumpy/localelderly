@@ -11,17 +11,14 @@ use App\Models\Banner;
 class BannerController extends Controller
 {
   public function index()
-  { 
-
+  {
 
     if(request()->ajax()){
 
-        $banner=Banner::all(); 
-          
-    
-        
-        return datatables()->of($banner)->addColumn('action',function($data){   
-           
+        $banner=Banner::all();
+
+        return datatables()->of($banner)->addColumn('action',function($data){
+
         return '<div class="actions">
                <a class="text-black" href="'.route('admin.banner.edit',$data->id).'">
                    <i class="feather-edit-3 me-1"></i> Edit
@@ -31,14 +28,14 @@ class BannerController extends Controller
               </a>
            </div>';
         })->make(true);
-       
+
     }
     $count= Banner::count();
     return view ('admin.banner.index',compact('count'))->with('banner');
 }
- 
- 
-   
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -62,26 +59,26 @@ class BannerController extends Controller
         //    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         //    'status'=>'required',
         // ]);
-        
+
         $banner =new Banner();
-      
-        if($request->hasFile('image')){     
+
+        if($request->hasFile('image')){
                 $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/banner/image/','upload_url'=>asset('public/uploads/banner/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
                 $image=$upload->get_response()['image'][0]->url;
                 $banner->image=$image;
             }
-        
+
          $banner->status=$request->status;
-   
+
          $banner->save();
         if (!$banner) {
             return redirect()->back()->with('Something Went Wrong');
         }
- 
+
          return redirect()->route('admin.banner.create')->with('success', 'Saved Successfully');
     }
 
-   
+
         public function edit($id)
     {
         $banner = Banner::find($id);
@@ -112,7 +109,7 @@ class BannerController extends Controller
         }
         return redirect()->route('admin.banner.index')->with('success', 'Updated Successfully');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *

@@ -52,24 +52,25 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
 
         $this->validate($request,[
             'category_name'=>'required',
             'description'=>'required',
             'status'=>'required',
          ]);
-         
+
+
          $category =new Category();
          $category->category_name =$request->category_name;
-   
-       
-         if($request->hasFile('image')){     
+
+
+         if($request->hasFile('image')){
             $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/category/image/','upload_url'=>asset('public/uploads/category/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|jfif|webp)$/i',]);
             $image=$upload->get_response()['image'][0]->url;
             $category->image=$image;
         }
-      
+
          $category->description=$request->description;
          $category->status=$request->status;
          $category->save();
@@ -98,12 +99,12 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->category_name = $request->category_name;
-        if($request->hasFile('image')){     
+        if($request->hasFile('image')){
             $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/category/image/','upload_url'=>asset('public/uploads/category/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|jfif|webp)$/i',]);
             $image=$upload->get_response()['image'][0]->url;
             $category->image=$image;
        }
-    
+
         $category->description = $request->description;
         $category->status = $request->status;
         $category->save();

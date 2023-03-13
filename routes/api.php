@@ -3,12 +3,20 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Api\V1\Videocall\VideoCallController;
-use \App\Http\Controllers\Api\V1\Customer\Account\ProfileController;
+use App\Http\Controllers\Api\V1\Customer\Account\ProfileController;
 use App\Http\Controllers\Api\V1\OtpController;
 use App\Http\Controllers\Api\V1\AllergyController;
 use App\Http\Controllers\Api\V1\Category\CategoryApiController;
 use App\Http\Controllers\Api\V1\Category\SubCategoryApiController;
+use App\Http\Controllers\Api\V1\Customer\Auth\LoginController;
+use App\Http\Controllers\Api\V1\Banner\BannerController;
+use App\Http\Middleware\CheckStatus;
+use App\Http\Controllers\Api\V1\Customer\PageController;
+use App\Http\Controllers\Api\V1\PackageController;
+
+
+
+// use App\Http\Controllers\Api\V1\Videocall\VideoCallController;
 
 // use App\Http\Controllers\Api\V1\Customer\ProfileController;
 // use App\Http\Controllers\Api\V1\Customer\YellowButtonController;
@@ -16,20 +24,15 @@ use App\Http\Controllers\Api\V1\Category\SubCategoryApiController;
 // use App\Http\Controllers\Api\V1\Customer\PatientProfileController;
 // use App\Http\Controllers\Api\V1\SubscriptionController;
 // use App\Http\Controllers\Admin\SymptomsController;
-// use App\Http\Controllers\Admin\TermsandconditionController;
-// use App\Http\Controllers\Admin\PrivacyPolicyController;
 // use App\Http\Controllers\Api\V1\Customer\Account\UserActivityController;
-// use App\Http\Controllers\Api\V1\PackageController;
 // use App\Http\Controllers\Api\V1\Customer\EmergencyController;
 // use App\Http\Controllers\Admin\HealthRecordController;
 // use App\Http\Controllers\Api\V1\MeetingRequestController;
 // use App\Http\Controllers\Api\V1\Customer\UserCallLogController;
 // use App\Http\Controllers\Api\V1\CallBackController;
 // use App\Http\Controllers\Api\V1\Patient\AppVersionController;
-use App\Http\Controllers\Api\V1\Customer\Auth\LoginController;
-use App\Http\Controllers\Api\V1\Banner\BannerController;
+
 // use App\Http\Controllers\Api\V1\Patient\DoctorProfileController;
- use App\Http\Middleware\CheckStatus;
 // use App\Http\Controllers\Api\V1\Patient\Account\PatientBankController;
 
 /*
@@ -64,26 +67,23 @@ Route::post('login',[\App\Http\Controllers\Api\V1\Customer\Auth\LoginController:
 Route::post('otp/generate',[OtpController::class,'generate_otp']);
 Route::any('otp/verification',[OtpController::class,'otpVerification']);
 Route::post('forgot/password',[LoginController::class,'forgotPassword']);
-
 //Banner
 Route::get('banner/list',[BannerController::class,'bannerList']);
-
-
 //allergy
 Route::get('allergy/list',[AllergyController::class,'allergy_List']);
-
 //Category
 Route::get('category/list',[CategoryApiController::class,'category_List']);
-
-
 //SubCategory
 Route::get('subcategory/list',[SubCategoryApiController::class,'subCategory_list']);
+//Page Controller
+Route::get('terms-and-condition',[PageController::class,'get_termandcondition']);
+Route::get('privacy-policy',[PageController::class,'get_privacypolicy']);
+
 
 //
 // Route::any('logout',[App\Http\Controllers\Api\V1\Customer\Auth\LoginController::class,'logout']);//logout
 // //App Version
 // Route::any('appversion',[App\Http\Controllers\Api\V1\Customer\AppVersionController::class,'show']);//logout
-
 
 // // VideoCall
 // Route::post('video/call/token', [VideoCallController::class, 'token']);
@@ -99,12 +99,9 @@ Route::get('subcategory/list',[SubCategoryApiController::class,'subCategory_list
 // //api for the callback request from thirdparty video streaming app
 // Route::post('playback',[CallBackController::class,'callback_stream_created']);
 
-// //Terms and Condition
-// Route::get('terms-and-condition',[TermsandconditionController::class,'get_termandcondition']);
+//
 
 
-// //Privacy Policy
-// Route::get('privacy-policy',[PrivacyPolicyController::class,'get_privacypolicy']);
 
 Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
   Route::prefix("V1")->group(function(){
@@ -112,25 +109,23 @@ Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
     Route::post('profile/update',[ProfileController::class,'update_profile']);
     Route::post('profile/store',[ProfileController::class,'store_user_profile']);
     Route::post('account/delete',[ProfileController::class,'account_delete']);
-   
+    Route::get('profile/info',[ProfileController::class,'profile_info']);
 
-
-//Package
-//     Route::get('package',[PackageController::class,'index']);
-// 	Route::get('package/subscriptions',[PackageController::class,'package_subscription']);
-// 	Route::post('package',[PackageController::class,'store']);
-//     Route::post('package/update',[PackageController::class,'update']);
-// 	Route::post('package/renew',[PackageController::class,'renew']);
-//     Route::post('package/renew/update',[PackageController::class,'renew_update']);
-// 	Route::get('package/status',[\App\Http\Controllers\Api\V1\Customer\Account\PackageController::class,'index']);
-//     Route::post('package/payment/fail',[PackageController::class,'payment_failure']);
+// Package
+    Route::get('package',[PackageController::class,'index']);
+	Route::get('package/subscriptions',[PackageController::class,'package_subscription']);
+	Route::post('package',[PackageController::class,'store']);
+    Route::post('package/update',[PackageController::class,'update']);
+	Route::post('package/renew',[PackageController::class,'renew']);
+    Route::post('package/renew/update',[PackageController::class,'renew_update']);
+	Route::get('package/status',[\App\Http\Controllers\Api\V1\Customer\Account\PackageController::class,'index']);
+    Route::post('package/payment/fail',[PackageController::class,'payment_failure']);
 
 
 //     //check activation code. entered by employee of company
 //     Route::post('validate/activation/code',[PackageController::class,'validate_activation']);
 
 //     //patient profile
-//     Route::get('profile',[AuthController::class,'profile_info']);
 //
 
 //     Route::get('videoscreen/profile',[AuthController::class,'videoprofile_info']);

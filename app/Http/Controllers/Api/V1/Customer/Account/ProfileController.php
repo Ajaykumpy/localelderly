@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\UserDevice;
-use App\Models\UserDevices;
+use App\Models\UserAllergy;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\UploadHandler;
@@ -77,26 +77,42 @@ class ProfileController extends Controller
         if($request->has('medical_conditions') && !empty($request->medical_conditions)){
             $user->medical_conditions=$request->medical_conditions;
         }
-        if($request->has('allergies') && !empty($request->allergies)){
-            $user->allergies=$request->allergies;
-        }
+        // if($request->has('allergies') && !empty($request->allergies)){
+        //     $user->allergies=$request->allergies;
+        // }
         if($request->has('diet_preferences') && !empty($request->diet_preferences)){
             $user->diet_preferences=$request->diet_preferences;
+        }
         if($request->has('goal') && !empty($request->diet_preferences)){
             $user->goal=$request->goal;
         }
-        }
-        // if($request->hasFile('image')){
+
+        // $userallergy->user_id = auth()->user()->id();
+        // $userallergy->allergy_id = $request->id;
+        // // if($request->hasFile('image')){
         //     $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/patient/image/','upload_url'=>asset('uploads/patient/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png|webp)$/i',]);
         //     $user->image=$upload->get_response()['image'][0]->url;
         // }
         $user->save();
+
         if (!$user) {
             return response()->json(['error'=>true,'message'=>'No Contact Found'],422);
         }
+        // if($request->has('allergy') && !empty($request->allergy)){
+
+        $userallergy=UserAllergy::updateOrCreate([
+            'user_id'=> auth()->user()->id,
+        ],[
+            'user_id' => auth()->user()->id,
+            'allergy_id' => $request->allergy_id
+        ]);
+        // dd($userallergy);
+
+    // }
+        // $userallergy->save();
           return response()->json(['success'=>true,'message'=>'profile updated successfully','data'=>$user],200);
     }
-  
+
 
       /**
     * User Profile Store
@@ -119,7 +135,7 @@ class ProfileController extends Controller
         $user->allergies=$request->allergies??"NA";
         $user->diet_preferences=$request->diet_preferences??"NA";
         $user->goal=$request->goal??"NA";
-     
+
         $user->save();
         if (!$user) {
             return response()->json(['error'=>true,'message'=>'No Contact Found'],422);
@@ -142,18 +158,23 @@ class ProfileController extends Controller
      {
         //dd(auth()->id());
         $user  = User::find(auth()->id());
+		$allergy=\App\Models\UserAllergy::where('user_id',auth()->id())->first()->allergy_id??0;
+
+        // dd($user->allergy);
         // $user->profile=PatientProfile::whereUserId(auth()->id())->first();
         //dd($user);
         // activity()->causedBy($user)->performedOn($user)->event('patient-profile')
         // ->useLog('patient-profile')
         // ->log('Look, User logged something');
-        return response()->json($user);
-
+        return response()->json([
+            'data'=>$user,
+            'allergy' => $allergy
+        ]);
     }
 
-     /**
+    /**
     * User  profile Delete
-    *.
+    *
     * @param  \Illuminate\Http\Request  $request
     * @return array
     */
@@ -164,15 +185,17 @@ class ProfileController extends Controller
         $user->status = 0;
         $user->ban = 1;
         $user->deleted = 1;
-        // $user->mobile = $user->mobile."-del";
+        $user->mobile = $user->mobile."del";
         $user->email = $user->email."-del";
         $user->save();
-        $user->name = $user->name.'del'.
-        //need to record lat lng while deletimng user
-        activity()->causedBy($user)->performedOn($user)->event('account')->useLog('delete')
-        ->withProperties(['user_name'=> $user->name, 'user_email'=> $user->email,'user_mobile'=> $user->mobile,
-                          'latitude'=>$request->latitude??"NA",'longitude'=>$request->longitude??"NA"])
-        ->log('User deleted his/her account');
+        // activity()->causedBy($user)->performedOn($user)->event('account')
+        //           ->useLog('delete')
+        //           ->withProperties(['user_name'=> $user->name, 'user_email'=> $user->email,'user_mobile'=> $user->mobile])
+        //           ->log('User deleted his/her account');
+
+        // activity()->causedBy($user)->performedOn($user)->event('account')->useLog('location')
+        //           ->withProperties(['latitude'=>$request->latitude??NULL,'longitude'=>$request->longitude??NULL])
+        //           ->log('User deleted his/her account');
         // $user->delete();
         if(!$user){
             return response()->json([

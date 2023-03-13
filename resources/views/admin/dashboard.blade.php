@@ -7,56 +7,72 @@
     <div class="content container-fluid pb-0">
         <h4 class="mb-3">Overview</h4>
         <div class="row">
-            <div class="col-xl-4 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
                             <span class="dash-widget-icon bg-success">
                                 <i class="feather-user-plus"></i>
                             </span>
-                            <div class="dash-count">                                
-                                <h5 class="dash-title">Customers</h5>                              
-                                <h2 class="mb-4s text-center text-success" id="Doctors">NA</h2>
+                            <div class="dash-count">
+                                <h5 class="dash-title">Customers</h5>
+                                <h2 class="mb-4s text-center text-success" id="Doctors">{{$customer}}</h2>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
                             <span class="dash-widget-icon bg-blue">
                                 <i class="feather-users"></i>
                             </span>
-                            <div class="dash-count">                                
+                            <div class="dash-count">
                                 <h5 class="dash-title">Instructors</h5>
-                                <h2 class="mb-4s text-center text-success" id="Patients">NA</h2>
-                               
+                                <h2 class="mb-4s text-center text-success" id="Patients">{{$instructor}}</h2>
+
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
                             <span class="dash-widget-icon bg-warning">
                                 <img src="assets/img/icon/calendar.png" alt="User Image">
                             </span>
-                            <div class="dash-count">                                
-                                <h5 class="dash-title">Course</h5>
-                                <h2 class="mb-4s text-center text-success" id="Appointment" >NA</h2>
-                                
+                            <div class="dash-count">
+                                <h5 class="dash-title">Dietitian</h5>
+                                <h2 class="mb-4s text-center text-success" id="Appointment" >{{$dietitian}}</h2>
+
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
-            
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-white">
+                                <img src="assets/img/icon/courses.png" alt="User Image">
+                            </span>
+                            <div class="dash-count">
+                                <h5 class="dash-title">MemberShips</h5>
+                                <h2 class="mb-4s text-center text-success" id="Appointment" >{{$package}}</h2>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
       {{-- <div class="row">
@@ -83,8 +99,8 @@
     <!-- script -->
 <script>
     {{--let doctors={!! $doctors??[] !!};
-	let patient_locations={!!$patient_locations??[]!!}; 
-	
+	let patient_locations={!!$patient_locations??[]!!};
+
 	function initMap() {
 	   window.map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 10,
@@ -133,7 +149,7 @@
 							infowindow.open(map, marker);
 						}
 					})(marker, i));
-					
+
 				}
 			}
 		}
@@ -144,7 +160,7 @@
 			map.setZoom(25);
 			google.maps.event.removeListener(listener);
 		});
-     
+
 }
 
 const locations = [
@@ -152,7 +168,7 @@ const locations = [
       @foreach($doctorlocation as $latlng)
         @if($latlng['latitude']  && $latlng['longitude'])
             { lat: {!! $latlng['latitude'] !!}, lng: {!! $latlng['longitude'] !!} },
-        @endif      
+        @endif
       @endforeach
   @endif
 ];

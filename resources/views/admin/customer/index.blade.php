@@ -1,29 +1,43 @@
 @extends('admin.layouts.default')
 @section('title')
-Admin - Category
+Admin - Customer
 @endsection
 @section('content')
-{{--<div class="row">
-    <div class="float-right">
- 
-    <a class="btn btn-lg btn-primary" href="{{route('program.create')}}">ADD</a>
-    </div>
- 
-
-
-</div>--}}
-{{--<div class="content container-fluid">
+{{-- <div class="content container-fluid">
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col-md-12 d-flex justify-content-end">
-                <div class="doc-badge me-3">Category <span class="ms-1">1</span></div>
-               <a href="{{route('admin.package.create')}}" data-bs-toggle="modal" data-bs-target="#addModal"
-                    class="btn btn-succes btn-add"><i class="feather-plus-square me-1"></i> Add New</a> 
-                <a href="{{route('category.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
+                <div class="doc-badge me-3">Customer <span class="ms-1">{{$count}}</span></div>
+                 <a href="{{route('admin.package.create')}}" data-bs-toggle="modal" data-bs-target="#addModal"
+                    class="btn btn-succes btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
+     <a href="{{route('admin.customer.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
             </div>
         </div>
-    </div>--}}
-{{--<div class="row rowmargin">
+    </div> --}}
+    <div class="content container-fluid">
+        <div class="page-header mb-0">
+            <div class="row align-items-center">
+                {{--<div class="col">
+                    <ul class="list-links">
+                        <li class="active"><a class="py-1" href="#">Subscribed</a></li>
+                        <li><a class="py-1" href="#">Unsubscribed</a></li>
+                        <li><a class="py-1" href="#">Expired</a></li>
+                    </ul>
+                </div>--}}
+                <div class="col d-flex justify-content-end">
+                    <div class="doc-badge me-3">Patient <span class="ms-1">{{$count}}</span></div>
+
+                    {{-- <div class="SortBy">
+                        <div class="selectBoxes order-by">
+                            <p class="mb-0"><img src="{{ asset('assets/img/icon/sort.png') }}" class="me-2" alt="icon"> Order by </p>
+                            <span class="down-icon"><i class="feather-chevron-down"></i></span>
+                        </div>
+                    </div> --}}
+
+                </div>
+            </div>
+        </div>
+<div class="row rowmargin">
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
@@ -42,33 +56,24 @@ Admin - Category
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="datatables table table-borderless hover-table" id="table">
-                            
+
                             <thead class="thead-light">
-                               
+
                                 <tr>
                                     <th>Sr.no</th>
-                               
-                                    <th>Image</th>
-                                    <th>Category Name</th>
-                                    <th>Satus</th>
+
+                                    <th>Photo</th>
+                                    <th>Member Name</th>
+                                    <th>Joining Date</th>
+                                    <th>Expire Date</th>
+                                    <th>Member Type</th>
+                                    <th>Member Status</th>
                                     <th>Action</th>
+                                    <th>Status</th>
                                 </tr>
-                               
+
                             </thead>
                             <tbody>
-                           {{-- @foreach ($program as $data)
-                                <tr>
-                               
-                                <td>{{$data->id}}</td>
-                                <td>{{$data->program_name}}</td>
-                                <td>{{$data->description}}</td>
-                                <td>{{$data->status}}</td>
-                                <td>{{$data->price}}</td>
-                                <td></td>
-                              
-                                </tr>
-                       
-                                @endforeach--}}
                             </tbody>
                         </table>
                     </div>
@@ -77,7 +82,7 @@ Admin - Category
             <div id="tablepagination" class="dataTables_wrapper"></div>
         </div>
     </div>
-</div>--}}
+</div>
 @stop
 @push('styles')
 <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -112,13 +117,18 @@ Admin - Category
             "columns": [
                 { "data": 'id',"name":'id','orderable': false, 'searchable': false,'width':'6%'},
                 { "data": "image","name":"image"},
-                { "data": "category_name","name":"category_name"},
+                { "data": "member_name","name":"member_name"},
+                { "data": "joining_date","name":"joining_date"},
+                { "data": "expire_date","name":"expire_date"},
+                { "data": "member_type","name":"member_type"},
+                { "data": "member_status","name":"member_status"},
 
-                { "data": "status","name":"status"},
-                
-                
-        
+
+
+
+
                 { "data": "action",orderable: false, searchable: false,visible:true},
+                { "data": "status","name":"status"},
             ],
             "columnDefs": [
                 {render: function (data, type, row, meta) {
@@ -167,7 +177,7 @@ Admin - Category
             },
         });
     });
-    
+
     function pack_del(id){
         Swal.fire({
           title: 'Are you sure?',
