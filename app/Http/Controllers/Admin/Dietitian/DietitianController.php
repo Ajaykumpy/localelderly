@@ -21,7 +21,7 @@ class DietitianController extends Controller
     // dd($dietitian);
     if(request()->ajax()){
 
-        $dietitian=staff::where('role',1)->get();
+        $dietitian=staff::where('role',2)->get();
 
         return datatables()->of($dietitian)->addColumn('action',function($data){
 

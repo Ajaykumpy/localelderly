@@ -23,8 +23,8 @@ class DashboardController extends Controller
     {
 
      $customer=User::count();
-     $instructor=Staff::where('role',0)->count();
-     $dietitian=Staff::where('role',1)->count();
+     $instructor=Staff::where('role',1)->count();
+     $dietitian=Staff::where('role',2)->count();
      $package=Package::count();
       return view('admin.dashboard',compact('customer','instructor','dietitian','package'));
     }
