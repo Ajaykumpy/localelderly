@@ -7,7 +7,7 @@
     <div class="content container-fluid pb-0">
         <h4 class="mb-3">Overview</h4>
         <div class="row">
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12" id="customers">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12" id="instructors">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12" id="dietitian">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
@@ -56,12 +56,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-3 col-sm-6 col-12" id="memberShips">
                 <div class="card">
                     <div class="card-body">
                         <div class="dash-widget-header">
-                            <span class="dash-widget-icon bg-white">
-                                <img src="assets/img/icon/courses.png" alt="User Image">
+                            <span class="dash-widget-icon bg-primary">
+                                <img src="assets/img/icon/membersship.png" alt="User Image">
                             </span>
                             <div class="dash-count">
                                 <h5 class="dash-title">MemberShips</h5>
@@ -98,6 +98,26 @@
 
     <!-- script -->
 <script>
+
+    document.getElementById("customers").onclick = function() {
+        window.location.href = "{{ route('admin.customer.index') }}";
+    };
+
+
+    document.getElementById("instructors").onclick = function() {
+        window.location.href = "{{ route('admin.instructor.index') }}";
+    };
+
+    document.getElementById("dietitian").onclick = function() {
+        window.location.href = "{{ route('admin.dietitian.index') }}";
+    };
+
+    document.getElementById("memberShips").onclick = function() {
+        window.location.href = "{{ route('admin.package.index') }}";
+    };
+
+
+</script>
     {{--let doctors={!! $doctors??[] !!};
 	let patient_locations={!!$patient_locations??[]!!};
 

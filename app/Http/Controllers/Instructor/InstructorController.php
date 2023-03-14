@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PatientCallRequest;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
+use App\Models\Staff;
 use App\Helpers\UploadHandler;
 use Hash;
 use Carbon\Carbon;
@@ -21,7 +22,7 @@ class InstructorController extends Controller
     {
     if(request()->ajax()){
 
-        $instructor=Instructor::all();
+        $instructor=Staff::where('role',0)->get();
 
         return datatables()->of($instructor)->addColumn('action',function($data){
         return '<div class="actions">
@@ -35,7 +36,7 @@ class InstructorController extends Controller
         })->make(true);
 
      }
-    $count= Instructor::count();
+    $count= Staff::where('role',0)->count();
     return view ('admin.instructor.dashboard',compact('count'));
 
     }
@@ -107,7 +108,7 @@ class InstructorController extends Controller
      */
     public function edit($id)
     {
-        $instructor = Instructor::find($id);
+        $instructor = Staff::find($id);
         return view('admin.instructor.edit',compact('instructor'));
     }
 
@@ -121,9 +122,9 @@ class InstructorController extends Controller
     public function update(Request $request, $id)
     {
 
-        $instructor = Instructor::find($id);
+        $instructor = Staff::find($id);
         if($request->hasFile('image')){
-            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/instructor/image/','upload_url'=>asset('public/uploads/instructor/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/staff/image/','upload_url'=>asset('public/uploads/staff/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
             $image=$upload->get_response()['image'][0]->url;
             $instructor->image=$image;
         }
@@ -134,12 +135,16 @@ class InstructorController extends Controller
         $instructor->mobile=$request->mobile;
         $instructor->email=$request->email;
         $instructor->gender=$request->gender;
-        $instructor->save();
+        $instructor->role=$request->role;
+        // $staff->password=Hash::make($request['password']);
 
-            if(!$instructor){
-                return redirect()->back()->with('error', 'Something went wrong');
-            }
-            return redirect()->route('admin.instructor.index')->with('success', 'Updated Successfully');
+        $instructor->save();
+        if (!$instructor) {
+            return redirect()->back()->with('Something Went Wrong');
+        }
+
+         return redirect()->route('admin.instructor.index')->with('success', 'Saved Successfully');
+
 
     }
 
@@ -149,9 +154,9 @@ class InstructorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $instructor=Instructor::where('id',$request->id)->delete();
+        $instructor=Staff::where('id',$request->id)->delete();
         if($instructor){
          return response()->json(['success'=>true, 'message'=>'Deleted Successfully'],200);
         }

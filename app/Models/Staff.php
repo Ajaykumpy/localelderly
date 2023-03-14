@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class Staff extends Model
 {
     use HasFactory, SoftDeletes;
   /**
@@ -15,7 +15,7 @@ class Banner extends Model
      * @var string
      */
 
-     protected $table = 'banner';
+     protected $table = 'staffs';
      protected $primaryKey='id';
 
 
@@ -24,6 +24,6 @@ class Banner extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['image','status'];
+    protected $fillable = [];
 
 }

@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Models\Instructor;
 use App\Models\Dietitian;
+use App\Models\Staff;
 use App\Models\Package;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -22,8 +23,8 @@ class DashboardController extends Controller
     {
 
      $customer=User::count();
-     $instructor=Instructor::count();
-     $dietitian=Dietitian::count();
+     $instructor=Staff::where('role',0)->count();
+     $dietitian=Staff::where('role',1)->count();
      $package=Package::count();
       return view('admin.dashboard',compact('customer','instructor','dietitian','package'));
     }
