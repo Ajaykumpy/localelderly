@@ -129,7 +129,4 @@ class GeneralSettingController extends Controller
 
     }
 
-
-
-
 }

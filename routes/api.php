@@ -101,7 +101,6 @@ Route::get('privacy-policy',[PageController::class,'get_privacypolicy']);
 
 //
 
-
 Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
   Route::prefix("V1")->group(function(){
 
@@ -113,7 +112,7 @@ Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
 // Package
     Route::get('package',[PackageController::class,'index']);
 	Route::get('package/subscriptions',[PackageController::class,'package_subscription']);
-	Route::post('packages',[PackageController::class,'store']);
+	Route::any('packages',[PackageController::class,'store']);
     Route::post('package/update',[PackageController::class,'update']);
 	Route::post('package/renew',[PackageController::class,'renew']);
     Route::post('package/renew/update',[PackageController::class,'renew_update']);
@@ -125,13 +124,10 @@ Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
     Route::post('bank-account',[PatientBankController::class,'create']);
     Route::put('bank/update/{id}',[PatientBankController::class,'update']);
     Route::get('bank-details',[PatientBankController::class,'show']);
-
-
 //  patient profile
 //
 
 //     Route::get('videoscreen/profile',[AuthController::class,'videoprofile_info']);
-
 
 //     Route::get('patient/profile/update',[AuthController::class,'update_profile']);
 
