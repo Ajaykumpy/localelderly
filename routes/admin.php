@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Category\SubCategoryController;
 use App\Http\Controllers\Admin\Banner\BannerController;
 use App\Http\Controllers\Admin\Dietitian\DietitianController;
+use App\Http\Controllers\Admin\Staff\StaffController;
+
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\Customer\CustomerController;
 // use App\Http\Controllers\Admin\SpecialistController;
@@ -48,7 +50,7 @@ use App\Http\Controllers\Admin\AdminAccount\AdminAccountController;
 Route::middleware('auth:admin')->group( function(){
 	Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
 	//program
-    Route::group(['prefix'=>'category'],function(){
+     Route::group(['prefix'=>'category'],function(){
         Route::get('',[CategoryController::class,'index'])->name('category.index');
         Route::get('/create',[CategoryController::class,'create'])->name('category.create');
         Route::post('/store',[CategoryController::class,'store'])->name('category.store');
@@ -64,15 +66,16 @@ Route::middleware('auth:admin')->group( function(){
 	// Route::resource('/instructor',InstructorController::class)->names('admin.instructor');
 
     Route::get('instructor',[InstructorController::class,'index'])->name('admin.instructor.index');
-	Route::get('instructor/create',[InstructorController::class,'create'])->name('admin.instructor.create');
+	// Route::get('instructor/create',[InstructorController::class,'create'])->name('admin.instructor.create');
 	Route::post('instructor/store',[InstructorController::class,'store'])->name('admin.instructor.store');
 	Route::get('instructor/edit/{id}',[InstructorController::class,'edit'])->name('admin.instructor.edit');
 	Route::post('instructor/update/{id}',[InstructorController::class,'update'])->name('admin.instructor.update');
 	Route::delete ('instructor/destroy/{id}',[InstructorController::class,'destroy'])->name('admin.instructor.destroy');
 
 
-	//program
-	Route::resource('/program',ProgramController::class)->names('admin.program');
+   //program
+   Route::resource('/program',ProgramController::class)->names('admin.program');
+
   //customer
   Route::get('customer',[CustomerController::class,'index'])->name('admin.customer.index');
   Route::get('customer/create',[CustomerController::class,'create'])->name('admin.customer.create');
@@ -114,12 +117,23 @@ Route::middleware('auth:admin')->group( function(){
 
 
 	// Dietitian
-     Route::get('dietitian',[DietitianController::class,'index'])->name('admin.dietitian.index');
+     Route::group(['prefix'=>'dietitian'],function(){
+     Route::get('',[DietitianController::class,'index'])->name('admin.dietitian.index');
      Route::get('/create',[DietitianController::class,'create'])->name('admin.dietitian.create');
      Route::post('/store',[DietitianController::class,'store'])->name('admin.dietitian.store');
      Route::get('/edit/{id}',[DietitianController::class,'edit'])->name('admin.dietitian.edit');
      Route::post('/update/{id}',[DietitianController::class,'update'])->name('admin.dietitian.update');
      Route::delete('/destroy/{id}',[DietitianController::class,'destroy'])->name('admin.dietitian.destroy');
+
+    });
+     // Staff
+     Route::get('staff',[StaffController::class,'index'])->name('admin.staff.index');
+     Route::get('/create',[StaffController::class,'create'])->name('admin.staff.create');
+     Route::post('/store',[StaffController::class,'store'])->name('admin.staff.store');
+     Route::get('/edit/{id}',[StaffController::class,'edit'])->name('admin.staff.edit');
+     Route::post('/update/{id}',[StaffController::class,'update'])->name('admin.staff.update');
+     Route::delete('/destroy/{id}',[StaffController::class,'destroy'])->name('admin.staff.destroy');
+
 
 	//Admin Account Details
 

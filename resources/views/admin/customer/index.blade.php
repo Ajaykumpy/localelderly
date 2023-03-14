@@ -25,7 +25,7 @@ Admin - Customer
                     </ul>
                 </div>--}}
                 <div class="col d-flex justify-content-end">
-                    <div class="doc-badge me-3">Patient <span class="ms-1">{{$count}}</span></div>
+                    <div class="doc-badge me-3">Customers <span class="ms-1">{{$count}}</span></div>
 
                     {{-- <div class="SortBy">
                         <div class="selectBoxes order-by">
@@ -170,7 +170,7 @@ Admin - Customer
                 // },
             ],
             "aaSorting": [],
-            "order": [[0, 'desc']],
+            "order": [[0, 'asc']],
             initComplete: (settings, json) => {
                 $('.dataTables_paginate').appendTo('#tablepagination');
                 $('.dataTables_filter').appendTo('#tableSearch');
@@ -179,6 +179,7 @@ Admin - Customer
     });
 
     function pack_del(id){
+        console.log(id);
         Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",
@@ -191,7 +192,7 @@ Admin - Customer
           if (result.isConfirmed) {
             $.ajax({
                 type:'post',
-                url:'{!! route("admin.category.destroy",'+id+') !!}',
+                url:'{!! route("admin.customer.destroy",'+id+') !!}',
                 data:{_token:'{{csrf_token()}}',_method:'delete',id:id},
                 success:function(data){
                     Swal.fire('Deleted!','Your Data has been deleted.','success')

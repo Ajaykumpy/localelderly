@@ -14,7 +14,7 @@ Admin - Package
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col-md-12 d-flex justify-content-end">
-                <div class="doc-badge me-3">Packages <span class="ms-1">{{$count}}</span></div>
+                <div class="doc-badge me-3">Program <span class="ms-1">{{$count}}</span></div>
                {{--   <a href="{{route('admin.package.create')}}" data-bs-toggle="modal" data-bs-target="#addModal"
                     class="btn btn-primary btn-add"><i class="feather-plus-square me-1"></i> Add New</a> --}}
                 <a href="{{route('admin.package.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
@@ -27,7 +27,7 @@ Admin - Package
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="card-title">Packages</h5>
+                            <h5 class="card-title">Program</h5>
                         </div>
                         <div class="col-auto custom-list d-flex">
                             <div class="form-custom me-2">

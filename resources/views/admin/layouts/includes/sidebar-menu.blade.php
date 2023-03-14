@@ -46,7 +46,7 @@
                 <a href="{{ route('admin.dietitian.index') }}"><i class="fa fa-circle"></i> <span >Dietian</span></a>
             </li>
             <li  class="{{ $url_2 == 'instructors' ? 'active' : '' }}">
-                <a href="{{ route('admin.dietitian.index') }}"><i class="fa fa-circle"></i> <span >Staff</span></a>
+                <a href="{{ route('admin.staff.index') }}"><i class="fa fa-circle"></i> <span >Add Staff</span></a>
             </li>
         </ul>
     </li>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\UploadHandler;
 use App\Models\Dietitian;
+use App\Models\Staff;
 use Hash;
 
 
@@ -16,15 +17,16 @@ class DietitianController extends Controller
     // $dietitian=Dietitian::all();
     // dd($dietitian);
 
-
+    // $dietitian=staff::where('role',1)->get();
+    // dd($dietitian);
     if(request()->ajax()){
 
-        $dietitian=Dietitian::all();
+        $dietitian=staff::where('role',1)->get();
 
         return datatables()->of($dietitian)->addColumn('action',function($data){
 
         return '<div class="actions">
-               <a class="text-black" href="'.route('admin.banner.edit',$data->id).'">
+               <a class="text-black" href="'.route('admin.dietitian.edit',$data->id).'">
                    <i class="feather-edit-3 me-1"></i> Edit
                </a>
                <a class="text-danger delete-speciality pointer-link" onclick="pack_del('.$data->id.')" data-id="'.$data->id.'">
@@ -34,7 +36,7 @@ class DietitianController extends Controller
         })->make(true);
 
     }
-    $count= Dietitian::count();
+    $count=Staff::where('role',1)->count();
     return view ('admin.dietitian.index',compact('count'));
 }
 
@@ -50,6 +52,14 @@ class DietitianController extends Controller
     {
        return view('admin.dietitian.create');
     }
+
+
+      public function edit($id)
+     {
+        $dietitian = Staff::find($id);
+        return view('admin.dietitian.edit',compact('dietitian'));
+
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -106,22 +116,32 @@ class DietitianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $banner = Banner::find($id);
-        if($request->hasfile('image')){
-            $file=$request->file('image');
-            $extention=$file->getClientOriginalExtension();
-            $filename=time().'.'.$extention;
-            $file->move('public/images/banner/image',$filename);
-            $banner->image=$filename;
-        }
-        $banner->status = $request->status;
-        $banner->save();
-        if(!$banner){
-            return redirect()->back()->with('error', 'Something went wrong');
-        }
-        return redirect()->route('admin.banner.index')->with('success', 'Updated Successfully');
-    }
 
+        $dietitian = Staff::find($id);
+        if($request->hasFile('image')){
+            $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/staff/image/','upload_url'=>asset('public/uploads/staff/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+            $image=$upload->get_response()['image'][0]->url;
+            $dietitian->image=$image;
+        }
+        $dietitian->name=$request->name;
+        $dietitian->middle_name=$request->middle_name;
+        $dietitian->last_name=$request->last_name;
+        $dietitian->dob=$request->dob;
+        $dietitian->mobile=$request->mobile;
+        $dietitian->email=$request->email;
+        $dietitian->gender=$request->gender;
+        $dietitian->role=$request->role;
+        // $staff->password=Hash::make($request['password']);
+
+        $dietitian->save();
+        if (!$dietitian) {
+            return redirect()->back()->with('Something Went Wrong');
+        }
+
+         return redirect()->route('admin.dietitian.index')->with('success', 'Saved Successfully');
+
+
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -130,7 +150,11 @@ class DietitianController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $banner=Banner::where('id',$request->id)->delete();
+
+
+        $banner=Staff::where('id',$request->id)->delete();
+
+
         if($banner){
          return response()->json(['success'=>true, 'message'=>'Deleted Successfully'],200);
         }

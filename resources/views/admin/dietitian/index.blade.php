@@ -10,7 +10,7 @@ Admin - Dietitian
              <div class="doc-badge me-3">Dietitian  <span class="ms-1">{{$count}}</span></div>
                {{--   <a href="{{route('admin.package.create')}}" data-bs-toggle="modal" data-bs-target="#addModal"
                     class="btn btn-succes btn-add"><i class="feather-plus-square me-1"></i> Add New</a> --}}
-                <a href="{{route('admin.dietitian.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>
+                {{--<a href="{{route('admin.dietitian.create')}}" class="btn btn-success btn-add"><i class="feather-plus-square me-1"></i> Add New</a>--}}
             </div>
         </div>
     </div>
@@ -39,6 +39,8 @@ Admin - Dietitian
                                 <tr>
                                     <th>Sr.no</th>
                                     <th>Image</th>
+                                    <th>name</th>
+                                    <th>Mobile</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -108,6 +110,8 @@ Admin - Dietitian
             "columns": [
                 { "data": 'id',"name":'id','orderable': false, 'searchable': false,'width':'5%'},
                 { "data": "image","name":"image"},
+                { "data": "name","name":"name"},
+                { "data": "mobile","name":"mobile"},
                 { "data": "status","name":"status"},
                 { "data": "action",orderable: false, searchable: false,visible:true},
             ],
@@ -119,7 +123,7 @@ Admin - Dietitian
                 },
 	            {render: function (data, type, row, meta) {
 
-                          return '<img class=" avatar-img" src="'+data+'" alt="Image" width="200px" height="100px">';
+                          return '<img class=" avatar-img" src="'+data+'" alt="Image" width="100px" height="80px">';
 
 
                       },
@@ -128,7 +132,7 @@ Admin - Dietitian
                 {render: function (data, type, row, meta) {
                         return (data==1)?'<span class="badge badge-success">Enable</span>':'<span class="badge badge-danger">Disable</span>';
                     },
-                    "targets":2,
+                    "targets":4,
                 }
                 // {render: function (data, type, row, meta) {
                 //         return meta.row+1;

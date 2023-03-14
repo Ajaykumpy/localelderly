@@ -1,6 +1,6 @@
 @extends('admin.layouts.default')
 @section('title')
-Admin - Instructor edit
+Admin - Instructor Edit
 @endsection
 @section('content')
 <div class="content container-fluid">
@@ -65,7 +65,16 @@ Admin - Instructor edit
                                 <input type="text" name="email" class="form-control" required value={{$instructor->email}}>
                             </div>
                         </div>
+                        <div class="col-md-6 col-xl-6 col-xxl-6 mb-3">
+                            <label>Assign Role <span class="text-danger">*</span></label>
+                       <div class="input-group">
+                       <select class="form-control" name="role" required>
+                           <option value="0" >Instructor</option>
+                           <option value="1" >Dietitian</option>
 
+                       </select>
+                      </div>
+                   </div>
                        {{-- <div class="col-md-6 col-xl-6 col-xxl-6 mb-3 form-group">
                             <label for="name">Password <span class="text-danger">*</span></label>
                             <div class="input-group">
