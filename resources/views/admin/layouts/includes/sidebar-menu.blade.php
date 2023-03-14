@@ -32,10 +32,10 @@
         <i class="fa fa-product-hunt"></i> <span >Programs</span> </span></a>
 
     </li>
-    <li class="{{ $url_2 == '' ? 'active' : '' }}">
+   {{-- <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-money"></i> <span >Booking Request</span></span></i>
         </a>
-    </li>
+    </li>--}}
     <li class="{{ $url_2 == 'batches' ? 'active' : '' }}">
         <a href="{{route('admin.batches.index')}}"><i class="fas fa-clipboard"></i> <span >Batches</span></span></i>
         </a>
@@ -57,7 +57,7 @@
             </li>
          </ul>
        </li>
-      <li class="{{ $url_2 == '' ? 'active' : '' }}">
+     {{-- <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="{{ route('admin.banner.index') }}"><i class="fab fa-bimobject"></i> <span >Attendance</span></a>
       </li>
       <li class="{{ $url_2 == '' ? 'active' : '' }}">
@@ -67,14 +67,14 @@
       <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-file-text-o"></i> <span >Report</span></span></i>
         </a>
-      </li>
+      </li>--}}
       <li class="{{ $url_2 == 'settings' ? 'active' : '' }} {{ $url_2 == 'specialist' ? 'active' : '' }}{{ $url_2 == 'page' ? 'active' : '' }}">
         <a href=#><i class="fa fa-cog" ></i> <span>Settings</span><span class="menu-arrow"></span></i>
         </a>
         <ul style="{{ $url_2 == 'settings' ? 'display: block;' : '' }} {{ $url_2 == 'specialist' ? 'display: block;' : '' }}{{ $url_2 == 'page' ? 'display: block;' : '' }}">
-             <li class="{{ $url_2 == 'settings' ? 'active' : '' }}">
+           {{-- <li class="{{ $url_2 == 'settings' ? 'active' : '' }}">
                 <a href="{{ route('admin.general_setting.index') }}"><i class="fa fa-sliders" ></i><span>General</span></a>
-            </li>
+            </li>--}}
 			<li class="{{ $url_2 == 'page' ? 'active' : '' }}">
                 <a href="{{ route('admin.page.index') }}"><i class="fa fa-file-text" ></i><span>Pages</span></a>
             </li>
@@ -85,14 +85,14 @@
             </li> --}}
         </ul>
       </li>
-    <li class="{{ $url_2 == '' ? 'active' : '' }}">
+    {{-- <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-envelope-square"></i> <span >Newsletter</span></span></i>
         </a>
     </li>
-    <li class="{{ $url_2 == '' ? 'active' : '' }}">
+   <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-key"></i> <span >Roles and Permissions</span></span></i>
         </a>
-    </li>
+    </li>--}}
 {{--
      <li class= "{{ $url_2 == 'instructor' ? 'active' : '' }}">
         <a href="#"><i class="feather-user-plus"></i> <span >Instructors</span><span class="menu-arrow"></span></a>

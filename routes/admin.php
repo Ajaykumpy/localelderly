@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\PageController;
 // use App\Http\Controllers\Admin\CallLogController;
 // use App\Http\Controllers\Admin\CallRequestController;
 // use App\Http\Controllers\Admin\QuestionController;
-// use App\Http\Controllers\Admin\GeneralSettingController;
+use App\Http\Controllers\Admin\GeneralSettingController;
 // use App\Http\Controllers\Admin\AppoinmentsController;
 // use App\Http\Controllers\Admin\TermsandconditionController;
 // use App\Http\Controllers\Admin\PrivacyPolicyController;
@@ -222,15 +222,15 @@ Route::middleware('auth:admin')->group( function(){
 
 	// //General Setting
 	Route::get('/settings/localization',[GeneralSettingController::class,'localization'])->name('admin.general_setting.localization');
-	// Route::get('/settings/email',[GeneralSettingController::class,'email'])->name('admin.general_setting.email');
-	// Route::get('/settings/appointment',[GeneralSettingController::class,'appointment'])->name('admin.general_setting.appointment');
-	// Route::get('/settings/app_update',[GeneralSettingController::class,'app_update'])->name('admin.general_setting.app_update');
-    // Route::get('/settings/zego_setting',[GeneralSettingController::class,'zego_setting'])->name('admin.general_setting.zego_setting');
-    // Route::get('/settings/razor_key',[GeneralSettingController::class,'razor_key'])->name('admin.general_setting.razor_key');
+	Route::get('/settings/email',[GeneralSettingController::class,'email'])->name('admin.general_setting.email');
+	Route::get('/settings/appointment',[GeneralSettingController::class,'appointment'])->name('admin.general_setting.appointment');
+	Route::get('/settings/app_update',[GeneralSettingController::class,'app_update'])->name('admin.general_setting.app_update');
+    Route::get('/settings/zego_setting',[GeneralSettingController::class,'zego_setting'])->name('admin.general_setting.zego_setting');
+    Route::get('/settings/razor_key',[GeneralSettingController::class,'razor_key'])->name('admin.general_setting.razor_key');
 
 	Route::resource('/settings',GeneralSettingController::class)->names('admin.general_setting');
 	// //Media Controller
-	// Route::post('/file-upload', [MediaController::class, 'store'])->name('media');
+	Route::post('/file-upload', [MediaController::class, 'store'])->name('media');
 	// Pages
 	Route::resource('/page',PageController::class)->names('admin.page');
 

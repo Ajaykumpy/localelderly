@@ -5,12 +5,46 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Settings;
 use Corcel\Model\Option;
+use App\Helpers\UploadHandler;
 use Doctrine\DBAL\Driver\Mysqli\Initializer\Options;
 use Illuminate\Http\Request;
 
 class GeneralSettingController extends Controller
 {
-    public function index(){
+//    public function index(){
+//     return view('admin.generalsettings.index');
+//    }
+
+
+//   public function store(Request $request){
+//      $general= new General();
+//      $general->name=$request->name;
+
+//      if($request->hasFile('image')){
+//         $upload=new UploadHandler(['param_name'=>'image','upload_dir'=>'public/uploads/logo/image/','upload_url'=>asset('public/uploads/logo/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+//         $image=$upload->get_response()['image'][0]->url;
+//         $general->image=$image;
+//     }
+
+
+//     if($request->hasFile('image_fav')){
+//         $upload=new UploadHandler(['param_name'=>'image_fav','upload_dir'=>'public/uploads/favicon/image/','upload_url'=>asset('public/uploads/favicon/image/').'/','image_versions'=>[],'print_response'=>false,'accept_file_types' => '/\.(gif|jpe?g|png||jfif|webp)$/i',]);
+//         $image_fav=$upload->get_response()['image_fav'][0]->url;
+//         $general->image=$image_fav;
+//     }
+//          dd($general);
+//      $general->image=$request->image;
+//      $general->image_fav=$request->image_fav;
+//      $general->mobile=$request->mobile;
+//      $general->date=$request->date;
+// ;
+
+
+
+//   }
+
+
+        public function index(){
       $options = Option::asArray();
       return view('admin.general_setting.settings',compact('options'));
 

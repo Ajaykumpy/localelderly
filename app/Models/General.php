@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Allergy extends Model
+class General extends Model
 {
     use HasFactory, SoftDeletes;
   /**
@@ -15,7 +15,7 @@ class Allergy extends Model
      * @var string
      */
 
-     protected $table = 'allergies';
+     protected $table = 'general';
      protected $primaryKey='id';
 
 
@@ -24,6 +24,6 @@ class Allergy extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name'];
+    protected $fillable = [];
 
 }
