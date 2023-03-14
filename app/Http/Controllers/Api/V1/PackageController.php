@@ -25,25 +25,24 @@ class PackageController extends Controller
    */
   public function index()
   {
-
-      $package = package::with('features')->where('status',1)->select('id','name','image', 'price', 'invoice_period', 'invoice_interval')->get();
-      if(auth()->check()){
-        $package=$package->map(function($items){
-            $subscription=\App\Models\PackageSubscription::where([
-                                                    'subscriber_type'=>get_class(auth()->user()),
-                                                    'subscriber_id'=>auth()->id(),
-                                                    'package_id'=>$items->id
-                                                ])->first();
-            $items->subscribed=$subscription?1:0;
-            $items->subscription_id=$subscription->id??0;
-            $items->active= auth()->user()->subscribedTo($items);
-            return $items;
-        });
-      }
-      if(!$package){
-          return response()->json(['error'=>true, 'package'=>$package],422);
-      }
-      return response()->json(['success'=>true, 'package'=>$package],200);
+    $package = package::with('features')->where('status',1)->select('id','name','image', 'price', 'invoice_period', 'invoice_interval')->get();
+    if(auth()->check()){
+    $package=$package->map(function($items){
+        $subscription=\App\Models\PackageSubscription::where([
+                                                'subscriber_type'=>get_class(auth()->user()),
+                                                'subscriber_id'=>auth()->id(),
+                                                'package_id'=>$items->id
+                                            ])->first();
+        $items->subscribed=$subscription?1:0;
+        $items->subscription_id=$subscription->id??0;
+        $items->active= auth()->user()->subscribedTo($items);
+        return $items;
+    });
+    }
+    if(!$package){
+        return response()->json(['error'=>true, 'package'=>$package],422);
+    }
+    return response()->json(['success'=>true, 'package'=>$package],200);
   }
 
   public function package_subscription(){
@@ -107,6 +106,17 @@ class PackageController extends Controller
             'message'=>'Package already taken'
         ],422);
     }*/
+    // Check Completed Payment
+    // If Starts , End  is filled User is alredy Completed the Payement
+    $package=Package::findOrFail($request->package_id);
+    $subscription=PackageSubscription::find($request->subscription_id);
+    //check package is started
+    if($subscription->starts_at && $subscription->ends_at && $subscription->ends_at>now()){
+        return response()->json([
+            'error'=>true,
+            'message'=>'Package already active'
+        ],422);
+    }
     //check pending payment or activation
     //if starts, end date in null then need to buy subscription
     $check_subscription=PackageSubscription::where([
@@ -125,7 +135,7 @@ class PackageController extends Controller
             'message'=>'Package already taken',
             'status'=>'pending',//$check_subscription_payment->post_status,
             'data'=>collect($check_subscription)->except(['subscriber_type'])
-        ],200);//422
+        ],422);//422
     }
 
     $package=Package::find($request->package_id);
@@ -184,16 +194,15 @@ class PackageController extends Controller
 
     // $subscription_payment=\Corcel\Model\Post::type('subscription')->hasMeta('subscription_id',$request->subscription_id)->orderBy('id','desc')->first();
 
-    $subscription=PackageSubscription::find($request->subscription_id);
+    // $subscription=PackageSubscription::find($request->subscription_id);
 
-
-    //check package is started
-    if($subscription->starts_at && $subscription->ends_at && $subscription->ends_at>now()){
-        return response()->json([
-            'error'=>true,
-            'message'=>'Package already active'
-        ],422);
-    }
+    // //check package is started
+    // if($subscription->starts_at && $subscription->ends_at && $subscription->ends_at>now()){
+    //     return response()->json([
+    //         'error'=>true,
+    //         'message'=>'Package already active'
+    //     ],422);
+    // }
 
     if($request->payment_method=="razorpay"){  //payment_method it will come from app
         $keys = DB::table('settings')->where('key', 'razor_key')->first();
@@ -248,7 +257,6 @@ class PackageController extends Controller
             'data'=>collect($subscription)->except(['subscriber_type'])
         ]);
     }
-
   }
   /*public function store(Request $request){
     $this->validate($request,[
