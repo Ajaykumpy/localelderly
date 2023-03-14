@@ -34,9 +34,9 @@ class PackageController extends Controller
                                                     'subscriber_id'=>auth()->id(),
                                                     'package_id'=>$items->id
                                                 ])->first();
-            $items->subscribed=$subscription?1:0;    
-            $items->subscription_id=$subscription->id??0;                                  
-            $items->active= auth()->user()->subscribedTo($items);                                
+            $items->subscribed=$subscription?1:0;
+            $items->subscription_id=$subscription->id??0;
+            $items->active= auth()->user()->subscribedTo($items);
             return $items;
         });
       }
@@ -87,13 +87,13 @@ class PackageController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function store(Request $request){
-    // Important points 
-    // In this function, when customer click on any of the package in app while purchasing it.  
+    // Important points
+    // In this function, when customer click on any of the package in app while purchasing it.
     // Then, api will be hit to this function to store the selected package in table, and in return on 200 status code app will goto the payment screen for further process
     // Also, customer can go back to package selection screen, if customer  want to select any new package.
     // Then again new record will be created in table.
     // when payment is successfull then, this record will be updated by start and end date for subscription
-      
+
     $this->validate($request,[
         'package_id'=>'required'
     ]);
@@ -116,7 +116,7 @@ class PackageController extends Controller
         'starts_at'=>null,
         'ends_at'=>null
     ])->first();
-    //if 
+    //if
     if($check_subscription){
         // $check_subscription_payment=\Corcel\Model\Post::type('subscription')->hasMeta('subscription_id',$check_subscription->id)->first();
         $check_subscription->subscription_id=$check_subscription->id;
@@ -126,8 +126,8 @@ class PackageController extends Controller
             'status'=>'pending',//$check_subscription_payment->post_status,
             'data'=>collect($check_subscription)->except(['subscriber_type'])
         ],200);//422
-    }   
-    
+    }
+
     $package=Package::find($request->package_id);
     $subscription=PackageSubscription::create([
         'subscriber_type'=>get_class($user),
@@ -140,9 +140,9 @@ class PackageController extends Controller
             'error'=>true,
             'message'=>'Unknown Error',
         ],422);
-    }   
-    
-    //this was old code it also record all data in post and post and meta data. Now, we are not going to record this data in 
+    }
+
+    //this was old code it also record all data in post and post and meta data. Now, we are not going to record this data in
     // $subscription_payment=new \Corcel\Model\Post();
     // $subscription_payment->post_type='subscription';
     // $subscription_payment->post_title='Subscription';
@@ -155,8 +155,8 @@ class PackageController extends Controller
     //     'price'=>$package->price,
     // ]);
     // $subscription_payment->saveMeta($subscription->toArray());
-    
-    
+
+
     $subscription->subscription_id=$subscription->id;
     return response()->json([
         'success'=>true,
@@ -181,26 +181,26 @@ class PackageController extends Controller
         'payment_method'=>'required'
     ]);
     $package=Package::findOrFail($request->package_id);
-    
+
     // $subscription_payment=\Corcel\Model\Post::type('subscription')->hasMeta('subscription_id',$request->subscription_id)->orderBy('id','desc')->first();
 
     $subscription=PackageSubscription::find($request->subscription_id);
-   
+
 
     //check package is started
-    if($subscription->starts_at && $subscription->ends_at && $subscription->ends_at>now()){        
+    if($subscription->starts_at && $subscription->ends_at && $subscription->ends_at>now()){
         return response()->json([
             'error'=>true,
             'message'=>'Package already active'
         ],422);
     }
 
-    if($request->payment_method=="razorpay"){  //payment_method it will come from app      
+    if($request->payment_method=="razorpay"){  //payment_method it will come from app
         $keys = DB::table('settings')->where('key', 'razor_key')->first();
         $secret = DB::table('settings')->where('key', 'razor_secret')->first();
         $api = new \Razorpay\Api\Api($keys->value, $secret->value);
         $verify_payment=$api->payment->fetch($request->payment_id);
-        
+
         //store payment record in table
         $payment = new UserTransactions;
         $payment->transaction_id            = 'PTX'.auth()->user()->id.mt_rand(111111, 999999);
@@ -231,7 +231,7 @@ class PackageController extends Controller
         }
         $trial = new \App\Helpers\Period($package->trial_interval, $package->trial_period, $startDate ?? now());
         $period = new \App\Helpers\Period($package->invoice_interval, $package->invoice_period, $trial->getEndDate());
-        
+
         $subscription->trial_ends_at = $trial->getEndDate();
         $subscription->starts_at = $period->getStartDate();
         $subscription->ends_at = $period->getEndDate();
@@ -247,9 +247,9 @@ class PackageController extends Controller
             'message'=>'Package activated successfully',
             'data'=>collect($subscription)->except(['subscriber_type'])
         ]);
-    }    
+    }
 
-  } 
+  }
   /*public function store(Request $request){
     $this->validate($request,[
         'package_id'=>'required'
@@ -273,14 +273,14 @@ class PackageController extends Controller
                 'status'=>$check_subscription_payment->post_status,
                 'data'=>collect($check_subscription)->except(['subscriber_type'])
             ],422);
-        }    
+        }
         return response()->json([
             'error'=>true,
             'message'=>'Package already taken'
         ],422);
     }
     $package=Package::find($request->package_id);
-   
+
     $subscription=PackageSubscription::create([
         'subscriber_type'=>get_class($user),
         'subscriber_id'=>$user->id,
@@ -292,7 +292,7 @@ class PackageController extends Controller
             'error'=>true,
             'message'=>'Unknown Error',
         ],422);
-    }    
+    }
     $subscription_payment=new \Corcel\Model\Post();
     $subscription_payment->post_type='subscription';
     $subscription_payment->post_title='Subscription';
@@ -320,14 +320,14 @@ class PackageController extends Controller
         'payment_id'=>'required'
     ]);
     $package=Package::findOrFail($request->package_id);
-    
+
     $subscription_payment=\Corcel\Model\Post::type('subscription')->hasMeta('subscription_id',$request->subscription_id)->orderBy('id','desc')->first();
 
     if($request->payment_method=="razorpay"){
         $subscription=PackageSubscription::find($subscription_payment->subscription_id);
         $api = new \Razorpay\Api\Api('rzp_test_Pcxw5YZ5JTcfeH', 'RX3uNaqiDbqW0hWQpfRLAh5q');
         $verify_payment=$api->payment->fetch($request->payment_id);
-        
+
         $subscription_payment->post_status=$verify_payment['status'];
         $subscription_payment->post_content=collect($verify_payment)->toJson();
         $subscription_payment->save();
@@ -345,7 +345,7 @@ class PackageController extends Controller
         }
         $trial = new \App\Helpers\Period($package->trial_interval, $package->trial_period, $startDate ?? now());
         $period = new \App\Helpers\Period($package->invoice_interval, $package->invoice_period, $trial->getEndDate());
-        
+
         $subscription->trial_ends_at = $trial->getEndDate();
         $subscription->starts_at = $period->getStartDate();
         $subscription->ends_at = $period->getEndDate();
@@ -355,7 +355,7 @@ class PackageController extends Controller
             'message'=>'Package activated successfully',
             'data'=>collect($subscription)->except(['subscriber_type'])
         ]);
-    }    
+    }
 
   }*/
 
@@ -430,11 +430,11 @@ class PackageController extends Controller
         'message'=>'Package added successfully',
         'status'=>$subscription_payment->status,
         'data'=>collect($subscription)->except(['subscriber_type'])
-    ]);        
+    ]);
   }
 
 
-  
+
   public function renew_update(Request $request){
      //remmember not to add transaction in post and post_meta
     $this->validate($request,[
@@ -443,9 +443,9 @@ class PackageController extends Controller
         'payment_id'=>'required'
     ]);
     $package=Package::findOrFail($request->package_id);
-    
+
     $subscription_payment=\Corcel\Model\Post::type('subscription')->hasMeta('subscription_id',$request->subscription_id)->orderBy('id','desc')->first();
-    
+
     if($request->payment_method=="razorpay"){
         $subscription=PackageSubscription::find($subscription_payment->subscription_id);
         $keys = DB::table('settings')->where('key', 'razor_key')->first();
@@ -469,7 +469,7 @@ class PackageController extends Controller
         }
         $trial = new \App\Helpers\Period($package->trial_interval, $package->trial_period, $startDate ?? now());
         $period = new \App\Helpers\Period($package->invoice_interval, $package->invoice_period, $trial->getEndDate());
-        
+
         $subscription->trial_ends_at = $trial->getEndDate();
         $subscription->starts_at = $period->getStartDate();
         $subscription->ends_at = $period->getEndDate();
@@ -479,7 +479,7 @@ class PackageController extends Controller
             'message'=>'Package renew successfully',
             'data'=>collect($subscription)->except(['subscriber_type'])
         ]);
-    }    
+    }
   }
 
    /**
@@ -513,7 +513,7 @@ class PackageController extends Controller
         }
         $trial = new \App\Helpers\Period($package->trial_interval, $package->trial_period, $startDate ?? now());
         $period = new \App\Helpers\Period($package->invoice_interval, $package->invoice_period, $trial->getEndDate());
-        
+
         $subscription=PackageSubscription::create([
             'subscriber_type'=>get_class($user),
             'subscriber_id'=>$user->id,
@@ -523,13 +523,13 @@ class PackageController extends Controller
             'starts_at' => $period->getStartDate(),
             'ends_at' => $period->getEndDate()
         ]);
-        
+
         if(!$subscription){
             return response()->json([
                 'error'=>true,
                 'message'=>'Unknown Error',
             ],422);
-        }  
+        }
         $subscription_payment=new \Corcel\Model\Post();
         $subscription_payment->post_type='subscription';
         $subscription_payment->post_title='Subscription';
@@ -556,7 +556,7 @@ class PackageController extends Controller
 
     }
 
-  } 
+  }
   public function old_validate_activation(Request $request)
   {
       $validator = Validator::make($request->all(), [
@@ -580,7 +580,7 @@ class PackageController extends Controller
         // $packages->price        =  $request->price;
         $start_date = Carbon::now();
         $end_date =  Carbon::now()->addDays($packages->days);
-        $packages->start_date   =  $start_date; 
+        $packages->start_date   =  $start_date;
         $packages->end_date     =  $end_date;
         // $packages->type     =  'Employee';
         $packages->save();

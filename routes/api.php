@@ -102,7 +102,6 @@ Route::get('privacy-policy',[PageController::class,'get_privacypolicy']);
 //
 
 
-
 Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
   Route::prefix("V1")->group(function(){
 
@@ -114,18 +113,21 @@ Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
 // Package
     Route::get('package',[PackageController::class,'index']);
 	Route::get('package/subscriptions',[PackageController::class,'package_subscription']);
-	Route::post('package',[PackageController::class,'store']);
+	Route::post('packages',[PackageController::class,'store']);
     Route::post('package/update',[PackageController::class,'update']);
 	Route::post('package/renew',[PackageController::class,'renew']);
     Route::post('package/renew/update',[PackageController::class,'renew_update']);
 	Route::get('package/status',[\App\Http\Controllers\Api\V1\Customer\Account\PackageController::class,'index']);
     Route::post('package/payment/fail',[PackageController::class,'payment_failure']);
+    //check activation code. entered by employee of company
+    Route::post('validate/activation/code',[PackageController::class,'validate_activation']);
+// Patient Bank Details
+    Route::post('bank-account',[PatientBankController::class,'create']);
+    Route::put('bank/update/{id}',[PatientBankController::class,'update']);
+    Route::get('bank-details',[PatientBankController::class,'show']);
 
 
-//     //check activation code. entered by employee of company
-//     Route::post('validate/activation/code',[PackageController::class,'validate_activation']);
-
-//     //patient profile
+//  patient profile
 //
 
 //     Route::get('videoscreen/profile',[AuthController::class,'videoprofile_info']);
@@ -159,10 +161,7 @@ Route::middleware(['auth:sanctum',CheckStatus::class])->group( function () {
 //     Route::get('call/logs',[UserCallLogController::class,'store']);
 //     Route::get('calllog/list',[UserCallLogController::class,'index']);
 // 	Route::get('calllog/list/{id}',[UserCallLogController::class,'show']);
-//     // Patient Bank Details
-//     // Route::post('bank-account',[PatientBankController::class,'create']);
-//     // Route::put('bank/update/{id}',[PatientBankController::class,'update']);
-//     // Route::get('bank-details',[PatientBankController::class,'show']);
+//
 //     Route::any('patient/location',[UserActivityController::class,'store']);
 
 //     //emergency contact

@@ -124,8 +124,6 @@ Admin - Dietitian
 
                       },
                     "targets":1,
-
-
                 },
                 {render: function (data, type, row, meta) {
                         return (data==1)?'<span class="badge badge-success">Enable</span>':'<span class="badge badge-danger">Disable</span>';
@@ -165,7 +163,7 @@ Admin - Dietitian
           if (result.isConfirmed) {
             $.ajax({
                 type:'post',
-                url:'{!! route("admin.banner.destroy",'+id+') !!}',
+                url:'{!! route("admin.dietitian.destroy",'+id+') !!}',
                 data:{_token:'{{csrf_token()}}',_method:'delete',id:id},
                 success:function(data){
                     Swal.fire('Deleted!','Your Data has been deleted.','success')
@@ -176,8 +174,6 @@ Admin - Dietitian
                     Swal.fire('Error!','Failed','error')
                 }
             });
-
-
           }
         })
   }
