@@ -22,7 +22,7 @@ class InstructorController extends Controller
     {
     if(request()->ajax()){
 
-        $instructor=Staff::where('role',0)->get();
+        $instructor=Staff::where('role',1)->get();
 
         return datatables()->of($instructor)->addColumn('action',function($data){
         return '<div class="actions">

@@ -71,8 +71,8 @@ Admin - Staff edit
                                                                 <label>Assign Role <span class="text-danger">*</span></label>
                                                            <div class="input-group">
                                                            <select class="form-control" name="role" required>
-                                                               <option value="0" >Instructor</option>
-                                                               <option value="1" >Dietitian</option>
+                                                               <option value="1" >Instructor</option>
+                                                               <option value="2" >Dietitian</option>
 
                                                            </select>
                                                           </div>
