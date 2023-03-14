@@ -36,8 +36,8 @@
         <a href="#"><i class="fa fa-money"></i> <span >Booking Request</span></span></i>
         </a>
     </li>
-    <li class="{{ $url_2 == '' ? 'active' : '' }}">
-        <a href="{{route('admin.program.index')}}"><i class="fas fa-clipboard"></i> <span >Batches</span></span></i>
+    <li class="{{ $url_2 == 'batches' ? 'active' : '' }}">
+        <a href="{{route('admin.batches.index')}}"><i class="fas fa-clipboard"></i> <span >Batches</span></span></i>
         </a>
     </li>
       <li class= "{{ $url_2 == 'customer' ? 'active' : '' }} {{ $url_2 == 'instructor' ? 'active' : '' }} {{ $url_2 == 'dietitian' ? 'active' : '' }} {{ $url_2 == 'staff' ? 'active' : '' }}"><a href="#">
@@ -57,18 +57,18 @@
             </li>
          </ul>
        </li>
-     <li class="{{ $url_2 == '' ? 'active' : '' }}">
+      <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="{{ route('admin.banner.index') }}"><i class="fab fa-bimobject"></i> <span >Attendance</span></a>
-     </li>
-     <li class="{{ $url_2 == '' ? 'active' : '' }}">
+      </li>
+      <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-money"></i> <span >Transactions</span></span></i>
         </a>
-     </li>
-     <li class="{{ $url_2 == '' ? 'active' : '' }}">
+      </li>
+      <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-file-text-o"></i> <span >Report</span></span></i>
         </a>
-    </li>
-    <li class="{{ $url_2 == 'settings' ? 'active' : '' }} {{ $url_2 == 'specialist' ? 'active' : '' }}{{ $url_2 == 'page' ? 'active' : '' }}">
+      </li>
+      <li class="{{ $url_2 == 'settings' ? 'active' : '' }} {{ $url_2 == 'specialist' ? 'active' : '' }}{{ $url_2 == 'page' ? 'active' : '' }}">
         <a href=#><i class="fa fa-cog" ></i> <span>Settings</span><span class="menu-arrow"></span></i>
         </a>
         <ul style="{{ $url_2 == 'settings' ? 'display: block;' : '' }} {{ $url_2 == 'specialist' ? 'display: block;' : '' }}{{ $url_2 == 'page' ? 'display: block;' : '' }}">
@@ -84,7 +84,7 @@
                     <span>Specialities</span></a>
             </li> --}}
         </ul>
-    </li>
+      </li>
     <li class="{{ $url_2 == '' ? 'active' : '' }}">
         <a href="#"><i class="fa fa-envelope-square"></i> <span >Newsletter</span></span></i>
         </a>

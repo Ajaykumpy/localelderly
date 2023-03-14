@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Category\CategoryController;
 use App\Http\Controllers\Admin\Category\SubCategoryController;
 use App\Http\Controllers\Admin\Banner\BannerController;
 use App\Http\Controllers\Admin\Dietitian\DietitianController;
+use App\Http\Controllers\Admin\Batches\BatchesController;
 use App\Http\Controllers\Admin\Staff\StaffController;
 
 use App\Http\Controllers\Admin\ProgramController;
@@ -126,6 +127,17 @@ Route::middleware('auth:admin')->group( function(){
      Route::delete('/destroy/{id}',[DietitianController::class,'destroy'])->name('admin.dietitian.destroy');
 
     });
+
+    //Batches
+    Route::group(['prefix'=>'batches'],function(){
+        Route::get('',[BatchesController::class,'index'])->name('admin.batches.index');
+        Route::get('/create',[BatchesController::class,'create'])->name('admin.batches.create');
+        Route::post('/store',[BatchesController::class,'store'])->name('admin.batches.store');
+        Route::get('/edit/{id}',[BatchesController::class,'edit'])->name('admin.batches.edit');
+        Route::post('/update/{id}',[BatchesController::class,'update'])->name('admin.batches.update');
+        Route::delete('/destroy/{id}',[BatchesController::class,'destroy'])->name('admin.batches.destroy');
+
+       });
      // Staff
      Route::get('staff',[StaffController::class,'index'])->name('admin.staff.index');
      Route::get('/create',[StaffController::class,'create'])->name('admin.staff.create');
